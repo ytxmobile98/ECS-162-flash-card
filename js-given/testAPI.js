@@ -13,7 +13,7 @@ let requestObject = {
 	"source": "en",
 	"target": "ko",
 	"q": ["example phrase"]
-}
+};
 
 console.log("English phrase: ", requestObject.q[0]);
 

@@ -2,26 +2,26 @@
 
 const root = "../";
 const mainPage = "main.html";
+const sourceLang = "english";
 
 const express = require("express");
 const APIrequest = require('request');
-
 const port = 55776;
 
 function queryHandler(req, res, next) {
 	const url = req.url;
 	const query = req.query;
 	
-	if (query.hasOwnProperty("english")) {
+	if (query.hasOwnProperty(sourceLang)) {
 		
 		const APIkey = "AIzaSyDN9t1YWrQ-4LqOjUO3tUWwtx6mzjBUdJk";  // ADD API KEY HERE
 		const url = "https://translation.googleapis.com/language/translate/v2?key=" + APIkey;
 		
-		let english = query.english;
+		let source = query[sourceLang];
 		const requestObject = {
 			"source": "en",
 			"target": "ko",
-			"q": [english]
+			"q": [source]
 		};
 		
 		APIrequest({ // HTTP header stuff
@@ -40,13 +40,11 @@ function queryHandler(req, res, next) {
 			if ((err) || (APIresHead.statusCode != 200)) {
 				console.log(errorStr);
 				console.log(APIresBody);
-				res.send(errorStr);
 			}
 			else {
 				if (APIresHead.error) {
 					// API worked but is not giving you data
 					console.log(APIresHead.error);
-					res.send(errorStr);
 				}
 				else {
 					let translatedText = APIresBody.data.translations[0].translatedText;
@@ -55,7 +53,6 @@ function queryHandler(req, res, next) {
 				}
 			}
 		} // end callback function
-
 
 	}
 	else {

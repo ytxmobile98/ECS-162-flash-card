@@ -20,7 +20,7 @@ function queryHandler(req, res, next) {
 		let source = query[sourceLang];
 		const requestObject = {
 			"source": "en",
-			"target": "ko",
+			"target": "zh-cn",
 			"q": [source]
 		};
 		

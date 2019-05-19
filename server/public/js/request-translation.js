@@ -10,7 +10,6 @@ function makeRequest(url) {
 	xhr.open("GET", url);
 	
 	xhr.onload = function () {
-console.log(xhr);
 		outputBox.value = xhr.responseText;
 	}
 	

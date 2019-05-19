@@ -19,6 +19,7 @@ const queryHandler = (function () {
 	app.get("/translate", translateModule.translate);
 	
 	// LASTLY: if file not found and is not a valid query
+	// see: https://expressjs.com/en/4x/api.html#app.use
 	function fileNotFound(request, response) {
 		const url = request.url;
 		response.type('text/plain');

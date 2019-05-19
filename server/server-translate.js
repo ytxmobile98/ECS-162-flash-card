@@ -1,4 +1,4 @@
-"use-strict";
+"use strict";
 
 module.exports.translate = function (request, response) {
 	const APIrequest = require('request');

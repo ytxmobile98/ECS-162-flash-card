@@ -6,9 +6,11 @@ const outputBox = document.getElementById("js-output");
 
 function makeRequest(url) {
 	const xhr = new XMLHttpRequest();
+	xhr.overrideMimeType("text/plain");
 	xhr.open("GET", url);
 	
 	xhr.onload = function () {
+console.log(xhr);
 		outputBox.value = xhr.responseText;
 	}
 	

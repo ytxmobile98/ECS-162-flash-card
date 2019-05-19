@@ -1,16 +1,16 @@
 "use strict";
 
-const root = "../";
+const root = "./public/";
 const mainPage = "main.html";
-const sourceLang = "english";
 
 const express = require("express");
 const APIrequest = require('request');
 const port = 55776;
 
-function queryHandler(req, res, next) {
-	const url = req.url;
-	const query = req.query;
+function translate(request, response) {
+	const url = request.url;
+	const query = request.query;
+	const sourceLang = "english";
 	
 	if (query.hasOwnProperty(sourceLang)) {
 		
@@ -49,35 +49,33 @@ function queryHandler(req, res, next) {
 				else {
 					let translatedText = APIresBody.data.translations[0].translatedText;
 					console.log("Translated: ", translatedText);
-					res.send(translatedText);
+					response.send(translatedText);
 				}
 			}
 		} // end callback function
 
 	}
 	else {
-		res.send("ERROR: query does not contain property \"english\"");
+		response.send("ERROR: query does not contain property \"english\"");
 	}
 }
 
-function fileNotFound(req, res) {
-	const url = req.url;
-	res.type('text/plain');
-	res.status(404);
-	res.send('Cannot find '+ url);
+function fileNotFound(request, response) {
+	const url = request.url;
+	response.type('text/plain');
+	response.status(404);
+	response.send('Cannot find '+ url);
 }
 
 const app = express();
 
-// check if there is a static file
 app.use(express.static(root, {
 	index: mainPage,
 }));
 
-// if static file is not found, check if it is a valid query
-app.get("/translate", queryHandler);
 
-// otherwise, not found
+app.get("/translate", translate); // translate
+
 app.use(fileNotFound);
 
 // start the server and listen for queries

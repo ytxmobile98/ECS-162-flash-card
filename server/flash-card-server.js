@@ -18,6 +18,9 @@ const queryHandler = (function () {
 	const translateModule = require("./server-translate.js");
 	app.get("/translate", translateModule.translate);
 	
+	// database
+	const databaseModule = require("./server-database.js");
+	
 	// LASTLY: if file not found and is not a valid query
 	// see: https://expressjs.com/en/4x/api.html#app.use
 	function fileNotFound(request, response) {

@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const APIrequest = require('request');
 const http = require('http');

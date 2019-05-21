@@ -1,0 +1,53 @@
+html {
+  height: 100%;
+  font-family: 'Raleway', sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+}
+
+div.all {
+  height: 100%;
+  display: flex;
+  flex-flow: row;
+}
+
+div.left {
+  display: flex;
+  width: 50%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #606B9B, #B191D4);
+}
+
+h1 {
+  text-align: center;
+  color: white;
+  font-size: 75pt;
+}
+
+h2 {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 45pt;
+  color: #70C7A9;
+  font-weight: lighter;
+}
+
+div.right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+p.signin{
+  padding: 5pt;
+  margin: 0;
+  background-color: #70C7A9;
+  color: white;
+  text-align: center;
+  font-size:1.5em;
+}

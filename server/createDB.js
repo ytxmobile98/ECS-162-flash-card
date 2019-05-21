@@ -12,7 +12,7 @@ const db = new sqlite3.Database(dbFileName);
 // If the table already exists, causes an error.
 // Fix the error by removing or renaming Flashcards.db
 const tableName = "Flashcards";
-const cmdStr = "CREATE TABLE " + tableName + " (user INT, english TEXT, chinese TEXT, seen INT DEFAULT 0, correct INT DEFAULT 0)";
+const cmdStr = "CREATE TABLE " + tableName + " (user INT, english TEXT UNIQUE, chinese TEXT UNIQUE, seen INT DEFAULT 0, correct INT DEFAULT 0)";
 db.run(cmdStr, tableCreationCallback);
 
 // Always use the callback for database operations and print out any

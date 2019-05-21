@@ -20,6 +20,7 @@ const queryHandler = (function () {
 	
 	// database
 	const databaseModule = require("./server-database.js");
+	app.get("/store", databaseModule.store);
 	
 	// LASTLY: if file not found and is not a valid query
 	// see: https://expressjs.com/en/4x/api.html#app.use

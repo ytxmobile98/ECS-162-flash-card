@@ -1,2 +1,5 @@
 node_modules/*
 *.db
+server/.DS_Store
+server/public/.DS_Store
+.DS_Store

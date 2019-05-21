@@ -4,17 +4,14 @@
 const sqlite3 = require("sqlite3").verbose();  // use sqlite
 const fs = require("fs"); // file system
 
-const tableName = "Flashcards";
 const dbFileName = "Flashcards.db";
 // makes the object that represents the database in our code
-const db = new sqlite3.Database(dbFileName);  // object, not database.
-
-module.exports.tableName = tableName;
-module.exports.dbFileName = dbFileName;
+const db = new sqlite3.Database(dbFileName);
 
 // Initialize table.
 // If the table already exists, causes an error.
 // Fix the error by removing or renaming Flashcards.db
+const tableName = "Flashcards";
 const cmdStr = "CREATE TABLE " + tableName + " (user INT, english TEXT, chinese TEXT, seen INT DEFAULT 0, correct INT DEFAULT 0)";
 db.run(cmdStr, tableCreationCallback);
 

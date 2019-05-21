@@ -3,12 +3,10 @@
 const sqlite3 = require("sqlite3").verbose();
 const fs = require("fs");
 
-const dbCreatorFileName = "./createDB.js";
+const dbFileName = "Flashcards.db";
+const db = new sqlite3.Database(dbFileName);
 
-const dbFileName = require(dbCreatorFileName).dbFileName;
-const db = new sqlite3.Database(dbFileName); // this is the actual database object
-
-const tableName = require(dbCreatorFileName).tableName;
+const tableName = "Flashcards";
 
 function insert(user, english, chinese) {
 	let insertCmd = "INSERT INTO " + tableName + "(user, english, chinese) VALUES ";

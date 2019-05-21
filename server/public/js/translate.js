@@ -26,9 +26,7 @@ function requestTranslation(str) {
 };
 
 queryBox.addEventListener("keyup", function (event) {
-	const ENTER_KEY_CODE = 13;
-	
-	if (event.keyCode === ENTER_KEY_CODE) {
+	if (event.key === "Enter") {
 		requestTranslation(queryBox.value);
 	}
 });

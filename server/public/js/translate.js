@@ -1,32 +1,29 @@
 "use strict";
 
-const queryBox = document.getElementById("js-query");
-let query = queryBox.value;
-const outputBox = document.getElementById("js-output");
-let output = outputBox.value;
+import { makeRequest, currentFlashCard } from "./main.js";
 
+const queryBox = document.getElementById("js-query");
+const outputBox = document.getElementById("js-output");
 
 function requestTranslation(str) {
+	// Sample translation request URL:
+	// http://server162.site:port/translate?english=example phrase
 	const url = "translate?english=" + str;
 	
 	const xhr = new XMLHttpRequest();
-	xhr.overrideMimeType("text/plain");
-	xhr.open("GET", url);
+	makeRequest(xhr, url, displayTranslation);
 	
-	xhr.onload = function () {
+	function displayTranslation() {
 		outputBox.value = xhr.responseText;
 		// query and output are stored as two internal strings, and are updated only when a request is returned successfully
-		query = queryBox.value;
-		output = outputBox.value;
+		if ((!!queryBox.value) && (!!outputBox.value)) { // check if nonempty
+			currentFlashCard.english = queryBox.value;
+			currentFlashCard.translation = outputBox.value;
+			console.log(currentFlashCard);
+		}
 	}
 	
-	xhr.error = function () {
-		console.log(new Error);
-	}
-	
-	xhr.send();
-}
-
+};
 
 queryBox.addEventListener("keyup", function (event) {
 	const ENTER_KEY_CODE = 13;
@@ -34,4 +31,6 @@ queryBox.addEventListener("keyup", function (event) {
 	if (event.keyCode === ENTER_KEY_CODE) {
 		requestTranslation(queryBox.value);
 	}
-})
+});
+
+export { requestTranslation };

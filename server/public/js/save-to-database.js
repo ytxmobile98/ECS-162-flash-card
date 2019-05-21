@@ -17,8 +17,10 @@ function requestToSave(currentFlashCard) {
 	
 	const xhr = new XMLHttpRequest();
 	makeRequest(xhr, url, savingFeedback);
-	
 	function savingFeedback() {
+		if (xhr.status % 100 !== 2) { // if resource loading failed
+			throw new Error("Sorry: saving to database FAILED, error code: " + xhr.status);
+		}
 		console.log("Saved: ", currentFlashCard);
 	}
 }

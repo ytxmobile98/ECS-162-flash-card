@@ -1,0 +1,58 @@
+html{
+    font-family: Arial, Helvetica, 'sans-serif';
+}
+
+h1{
+    text-align: center;
+    color: #5F6899;
+    font-size: 70pt;
+    justify-content: center;
+    display: inline;
+    position: relative;
+    top: 20px;
+    left: 300px;
+}
+
+main{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#js-query{
+    width: 30%;
+    padding: 180px 180px;
+    font-size: 30pt;
+}
+
+#js-output{
+    width: 30%;
+    padding: 180px 180px;
+    font-size: 30pt;
+}
+
+#start{
+    font-size: 25pt;
+    background-color: #5F6899;
+    color: white;
+    border-radius: 12px;
+    text-align: center;
+    padding: 16px 32px;
+    margin: 32px 32px;
+    display: inline;
+}
+
+#js-save{
+    font-size: 25pt;
+    background-color: #70C7AA;
+    color: white;
+    border-radius: 12px;
+    text-align: center;
+    padding: 16px 32px;
+    margin: 32px 32px;
+    position: fixed;
+    bottom: 50px;
+    right: 70px;
+    width: 300px;
+}

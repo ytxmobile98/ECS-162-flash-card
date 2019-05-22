@@ -9,7 +9,6 @@
 	position: relative;
 	max-height: 100pt;
 	overflow: auto;
-	padding: 10pt 0;
 	text-align: center;
 	color: var(--primary-color);
 }
@@ -22,18 +21,21 @@
 .ui-header__switch-view-button {
 	position: absolute;
 	top: 50%;
-	left: 2%;
+	left: 5%;
 	transform: translate(0, -50%);
 	background-color: var(--primary-color);
 	color: white;
 }
 
-/* The flexbox for flashcard */
+/* The main UI for saving words */
+
+.ui-main {
+	margin: auto 10%;
+}
 
 .flashcard__flexbox {
 	display: flex;
 	flex-direction: row;
-	margin: auto 10%;
 	justify-content: center;
 	align-items: center;
 }
@@ -45,6 +47,12 @@
 	display: flex;
 	flex-grow: 1;
 }
+.flashcard__card:first-child {
+	margin-left: 0;
+}
+.flashcard__card:last-child {
+	margin-right: 0;
+}
 
 .flashcard__textbox {
 	flex-grow: 1;
@@ -53,9 +61,7 @@
 	font-size: 20pt;
 }
 
-/* The Save button */
 .save-button__par {
-	margin: 0 2%;
 	text-align: right;
 }
 

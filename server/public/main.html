@@ -15,18 +15,21 @@
 			<h1 class="ui-header__page-name t-font__header">Lango!</h1>
 		</header>
 		
-		<main class="flashcard__flexbox">
-			<div class="flashcard__card" title="Press ENTER to translate">
-				<input id="js-query" class="flashcard__textbox t-font__primary" type="text" placeholder="English" />
+		<main class="ui-main">
+			<div class="flashcard__flexbox">
+				<div class="flashcard__card" title="Press ENTER to translate">
+					<input id="js-query" class="flashcard__textbox t-font__primary" type="text" placeholder="English" />
+				</div>
+				<div class="flashcard__card">
+					<input id="js-output" class="flashcard__textbox t-font__primary" type="text" placeholder="Chinese 中文" readonly="readonly" />
+				</div>
 			</div>
-			<div class="flashcard__card">
-				<input id="js-output" class="flashcard__textbox t-font__primary" type="text" placeholder="Chinese 中文" readonly="readonly" />
-			</div>
+			
+			<p class="save-button__par">
+				<button id="js-save" class="ui-button save-button t-font__primary">Save</button>
+			</p>
 		</main>
 		
-		<p class="save-button__par">
-			<button id="js-save" class="ui-button save-button t-font__primary">Save</button>
-		</p>
 		
 		<footer class="ui-footer">
 			<div class="user-name-bar">UserName</div>

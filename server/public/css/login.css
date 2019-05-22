@@ -7,13 +7,13 @@ body {
   height: 100%;
 }
 
-div.all {
+.all {
   height: 100%;
   display: flex;
   flex-flow: row;
 }
 
-div.left {
+.left {
   display: flex;
   width: 50%;
   height: 100%;
@@ -36,13 +36,14 @@ h2 {
   font-weight: lighter;
 }
 
-div.right {
+.right {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 50%;
 }
-p.signin{
+
+.signin{
   padding: 5pt;
   margin: 0;
   background-color: #70C7A9;

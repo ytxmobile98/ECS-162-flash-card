@@ -4,28 +4,32 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" type="text/css" href="main.css">
+		<link rel="stylesheet" type="text/css" href="css/main.css">
 		<title>Main Page</title>
 	</head>
 
-	<body>
+	<body class="t-font__primary">
 		
-		<header>
-			<button id = "start">Start Review</button>
-			<h1>Lango!</h1>
+		<header class="ui-header">
+			<button class="ui-button ui-header__switch-view-button t-font__primary">Start Review</button>
+			<h1 class="ui-header__page-name t-font__header">Lango!</h1>
 		</header>
 		
-		<main>
-			<div>
-				<input id="js-query" type="text" placeholder="English" />
+		<main class="flashcard__flexbox">
+			<div class="flashcard__card" title="Press ENTER to translate">
+				<input id="js-query" class="flashcard__textbox t-font__primary" type="text" placeholder="English" />
 			</div>
-			<div>
-				<input id="js-output" type="text" placeholder="Translation" readonly="readonly" />
+			<div class="flashcard__card">
+				<input id="js-output" class="flashcard__textbox t-font__primary" type="text" placeholder="Chinese 中文" readonly="readonly" />
 			</div>
 		</main>
 		
-		<footer>
-			<button id="js-save">Save</button>
+		<p class="save-button__par">
+			<button id="js-save" class="ui-button save-button t-font__primary">Save</button>
+		</p>
+		
+		<footer class="ui-footer">
+			<div class="user-name-bar">UserName</div>
 		</footer>
 
 		<script type="module" src="js/main.js"></script>

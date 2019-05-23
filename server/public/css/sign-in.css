@@ -41,6 +41,7 @@ body {
   align-items: center;
   flex-basis: 50%;
   flex-grow: 1;
+  min-height: 200px;
 }
 
 .sign-in-button {

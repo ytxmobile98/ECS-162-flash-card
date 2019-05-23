@@ -4,14 +4,19 @@
 :root {
 	--primary-font: Helvetica, Arial, sans-serif;
 	--header-font: Raleway, sans-serif;
+	--secondary-font: "Open Sans", sans-serif;
 }
 
-.t-font__primary {
+.t-font--primary {
 	font-family: var(--primary-font);
 }
 
-.t-font__header {
+.t-font--header {
 	font-family: var(--header-font);
 	font-weight: 900;
 }
 
+.t-font--secondary {
+	font-family: var(--secondary-font);
+	font-weight: 300;
+}

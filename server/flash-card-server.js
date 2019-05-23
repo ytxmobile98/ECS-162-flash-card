@@ -11,7 +11,7 @@ const queryHandler = (function () {
 	
 	// serve the main page
 	const root = "./public/";
-	const mainPage = "main.html";
+	const mainPage = "sign-in.html";
 	app.use(express.static(root, { index: mainPage }));
 	
 	// translate

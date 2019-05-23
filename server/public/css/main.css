@@ -3,6 +3,11 @@
 @import url("themes.css");
 @import url("buttons.css");
 
+body {
+	min-height: calc(100vh - 100px);
+	padding-bottom: 100px;
+}
+
 /* The main UI header */
 
 .ui-header {

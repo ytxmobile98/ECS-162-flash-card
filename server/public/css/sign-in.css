@@ -1,0 +1,65 @@
+@import url("reset.css");
+
+@import url("themes.css");
+
+html {
+  font-family: 'Raleway', sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.sign-in__flexbox {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.sign-in__header {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 50%;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: left;
+  background: linear-gradient(to bottom right, var(--primary-color), var(--primary-color-gradient));
+  box-shadow: 0 0 20pt gray;
+}
+
+.sign-in__primary-heading {
+  color: white;
+  font-size: 60pt;
+  margin: 20pt;
+}
+
+.sign-in__secondary-heading {
+  font-size: 32pt;
+  color: #70C7A9;
+  margin: 20pt;
+}
+
+.sign-in__main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-basis: 50%;
+  flex-grow: 1;
+}
+
+.sign-in-button {
+  width: 191px;
+  height: 46px;
+  border: none;
+  cursor: pointer;
+  background-size: contain;
+  background-image: url(../icons/google-sign-in/btn_google_signin_light_normal_web@2x.png);
+}
+.sign-in-button:hover, .sign-in-button:focus {
+	background-image: url(../icons/google-sign-in/btn_google_signin_light_focus_web@2x.png);
+}
+.sign-in-button:active {
+	background-image: url(../icons/google-sign-in/btn_google_signin_light_pressed_web@2x.png);
+}

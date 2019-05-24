@@ -1,0 +1,13 @@
+/* The main UI footer */
+
+.user-name-bar {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	line-height: 1.5em;
+	background-color: var(--primary-color);
+	color: white;
+	font-size: 25pt;
+}

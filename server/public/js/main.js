@@ -25,5 +25,11 @@ function makeRequest(xhr, url, onloadCallback) {
 	xhr.send();
 }
 
+const toAnswerPageButton = document.getElementById("js-to-answer-page-button");
+toAnswerPageButton.addEventListener("click", function () {
+	// This will be changed in the next assignment; now it is simply a page jump
+	window.location.href = "answer.html";
+})
+
 export { currentFlashCard, makeRequest };
 

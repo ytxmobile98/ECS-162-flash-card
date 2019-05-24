@@ -1,0 +1,38 @@
+@import url("reset.css");
+
+@import url("themes.css");
+@import url("buttons.css");
+@import url("cards.css");
+
+@import url("ui-header.css");
+@import url("ui-main.css");
+@import url("ui-footer.css");
+
+/* The main UI */
+
+.ui-main {
+	margin: auto;
+	width: 80%;
+	max-width: 500px;
+}
+
+/* The flash cards */
+
+.flashcard__card {
+	margin: 5pt;
+}
+
+.flashcard__card--translation {
+	height: 160px;
+}
+
+.flashcard__card--english {
+	height: 80px;
+}
+
+.flashcard__flip-card-icon {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 50px;
+}

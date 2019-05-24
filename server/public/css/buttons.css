@@ -6,3 +6,12 @@
 	font-size: 14pt;
 	cursor: pointer;
 }
+
+.primary-action-button__par {
+	text-align: right;
+}
+
+.primary-action-button {
+	background-color: var(--accent-color);
+	color: white;
+}

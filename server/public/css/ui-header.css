@@ -1,0 +1,25 @@
+@import url("themes.css");
+
+/* The main UI header */
+
+.ui-header {
+	position: relative;
+	max-height: 100pt;
+	overflow: auto;
+	text-align: center;
+	color: var(--primary-color);
+}
+
+.ui-header__page-name {
+	margin: 0;
+	font-size: 60pt;
+}
+
+.ui-header__switch-view-button {
+	position: absolute;
+	top: 50%;
+	left: 5%;
+	transform: translate(0, -50%);
+	background-color: var(--primary-color);
+	color: white;
+}

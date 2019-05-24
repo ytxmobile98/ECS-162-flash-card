@@ -3,6 +3,7 @@
 @import url("themes.css");
 
 body {
+	padding: 0;
   margin: 0;
 }
 

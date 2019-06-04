@@ -28,7 +28,7 @@ const queryHandler = (function () {
 	app.get("/user/", googleSignInModule.isAuthenticated, express.static(".", {index: "/main.html"}));
 	
 	// sign out
-	app.get('/logout', function(req, res){
+	app.get('/auth/sign-out', function(req, res){
 	  req.logout();
 	  res.redirect('/');
 	});

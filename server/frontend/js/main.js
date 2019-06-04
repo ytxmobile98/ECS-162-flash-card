@@ -29,6 +29,11 @@ const toAnswerPageButton = document.getElementById("js-to-answer-page-button");
 toAnswerPageButton.addEventListener("click", function () {
 	// This will be changed in the next assignment; now it is simply a page jump
 	window.location.href = "answer.html";
+});
+
+const signOutButton = document.getElementById("js-sign-out-button");
+signOutButton.addEventListener("click", function () {
+	window.location.href = "/auth/sign-out";
 })
 
 export { currentFlashCard, makeRequest };

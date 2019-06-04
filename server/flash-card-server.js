@@ -23,7 +23,9 @@ const queryHandler = (function () {
 	app.use("/", express.static("public", {index: "/sign-in.html"}));
 	app.get("/auth/google", googleSignInModule.authGoogleProfile);
 	app.get("/auth/redirect", googleSignInModule.authGoogle, googleSignInModule.redirectToUserPage);
-	app.get("/user/", googleSignInModule.isAuthenticated, express.static(".", {index: "/main.html"})); // per-user content is only visible after login
+	// per-user content is only visible after login
+	app.get("/user/*", googleSignInModule.isAuthenticated, express.static("."));
+	app.get("/user/", googleSignInModule.isAuthenticated, express.static(".", {index: "/main.html"}));
 	
 	// LASTLY: if file not found and is not a valid query
 	// see: https://expressjs.com/en/4x/api.html#app.use

@@ -4,15 +4,16 @@ const express = require("express");
 const port = 55776;
 
 const app = express();
+module.exports.app = app;
 
 // app features: handle different types of requests
 // enclosed in an IIFE
 const queryHandler = (function () {
 	
 	// serve the main page
-	const root = "./public/";
-	const mainPage = "sign-in.html";
-	app.use(express.static(root, { index: mainPage }));
+	const root = ".";
+	const mainPage = "./public/sign-in.html";
+	//app.use(express.static(root, { index: mainPage }));
 	
 	// translate
 	const translateModule = require("./server-translate.js");
@@ -21,6 +22,13 @@ const queryHandler = (function () {
 	// database
 	const databaseModule = require("./server-database.js");
 	app.get("/store", databaseModule.store);
+	
+	// login
+	const googleLoginModule = require("./server-google-login.js");
+	app.get("/*",express.static('public'));
+	app.get("/auth/google", googleLoginModule.authGoogleProfile());
+	app.get("/auth/redirect", googleLoginModule.authGoogle(), googleLoginModule.redirectToUserPage);
+	app.get("/user/*", googleLoginModule.isAuthenticated, express.static('.'));
 	
 	// LASTLY: if file not found and is not a valid query
 	// see: https://expressjs.com/en/4x/api.html#app.use
@@ -40,3 +48,4 @@ app.listen(port, function () {
 	console.log('Listening...');
 	console.log(`Server running at http://localhost:${port}/`);
 });
+

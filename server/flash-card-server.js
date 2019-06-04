@@ -10,11 +10,6 @@ module.exports.app = app;
 // enclosed in an IIFE
 const queryHandler = (function () {
 	
-	// serve the main page
-	const root = ".";
-	const mainPage = "./public/sign-in.html";
-	//app.use(express.static(root, { index: mainPage }));
-	
 	// translate
 	const translateModule = require("./server-translate.js");
 	app.get("/translate", translateModule.translate);
@@ -25,9 +20,9 @@ const queryHandler = (function () {
 	
 	// login
 	const googleLoginModule = require("./server-google-login.js");
-	app.get("/*",express.static('public'));
-	app.get("/auth/google", googleLoginModule.authGoogleProfile());
-	app.get("/auth/redirect", googleLoginModule.authGoogle(), googleLoginModule.redirectToUserPage);
+	app.use("/", express.static('public', {index: "/sign-in.html"}));
+	app.get("/auth/google", googleLoginModule.authGoogleProfile);
+	app.get("/auth/redirect", googleLoginModule.authGoogle, googleLoginModule.redirectToUserPage);
 	app.get("/user/*", googleLoginModule.isAuthenticated, express.static('.'));
 	
 	// LASTLY: if file not found and is not a valid query

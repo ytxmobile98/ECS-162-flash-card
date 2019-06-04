@@ -24,16 +24,15 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
-module.exports.authGoogleProfile = function () {
+module.exports.authGoogleProfile = (function () {
 	return passport.authenticate('google', {scope: ['profile']});
-}
-module.exports.authGoogle = function() {
+})();
+module.exports.authGoogle = (function() {
 	return passport.authenticate('google');
-}
+})();
 
 // check if user has logged in, when trying to access personal data
 module.exports.isAuthenticated = function(req, res, next) {
-	console.log(req.user);
 	if (req.user) {
 		console.log("Req.session:",req.session);
 		console.log("Req.user:",req.user);

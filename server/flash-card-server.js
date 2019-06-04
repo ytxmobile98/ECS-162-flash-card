@@ -27,6 +27,13 @@ const queryHandler = (function () {
 	app.get("/user/*", googleSignInModule.isAuthenticated, express.static("."));
 	app.get("/user/", googleSignInModule.isAuthenticated, express.static(".", {index: "/main.html"}));
 	
+	// sign out
+	app.get('/logout', function(req, res){
+	  req.logout();
+	  res.redirect('/');
+	});
+
+	
 	// LASTLY: if file not found and is not a valid query
 	// see: https://expressjs.com/en/4x/api.html#app.use
 	function fileNotFound(request, response) {

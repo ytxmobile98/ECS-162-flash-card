@@ -59,5 +59,5 @@ passport.deserializeUser((dbRowID, done) => {
 
 module.exports.redirectToUserPage = function(req, res) {
 	console.log('Signed in and using cookies!')
-	res.redirect('/user/main.html');
+	res.redirect('/user/');
 };

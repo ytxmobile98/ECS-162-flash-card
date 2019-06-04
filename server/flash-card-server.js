@@ -18,12 +18,12 @@ const queryHandler = (function () {
 	const databaseModule = require("./server-database.js");
 	app.get("/store", databaseModule.store);
 	
-	// login
-	const googleLoginModule = require("./server-google-login.js");
-	app.use("/", express.static('public', {index: "/sign-in.html"}));
-	app.get("/auth/google", googleLoginModule.authGoogleProfile);
-	app.get("/auth/redirect", googleLoginModule.authGoogle, googleLoginModule.redirectToUserPage);
-	app.get("/user/*", googleLoginModule.isAuthenticated, express.static('.'));
+	// sign in
+	const googleSignInModule = require("./server-google-sign-in.js");
+	app.use("/", express.static("public", {index: "sign-in.html"}));
+	app.get("/auth/google", googleSignInModule.authGoogleProfile);
+	app.get("/auth/redirect", googleSignInModule.authGoogle, googleSignInModule.redirectToUserPage);
+	app.get("/user*", googleSignInModule.isAuthenticated, express.static('.', {index: "main.html"})); // per-user content is only visible after login
 	
 	// LASTLY: if file not found and is not a valid query
 	// see: https://expressjs.com/en/4x/api.html#app.use

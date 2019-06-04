@@ -6,7 +6,7 @@ const passport = require("passport");
 const cookieSession = require('cookie-session');
 const GoogleStrategy = require('passport-google-oauth20');
 
-const googleLoginData = {
+const googleSignInData = {
     clientID: '178041928362-o8hcusbdlf9cdmfm3h4pm0s5dsdnut8m.apps.googleusercontent.com',
     clientSecret: 'mu-bG0zseFyZ7AA_7XtU7u-l',
     callbackURL: '/auth/redirect'
@@ -16,7 +16,7 @@ function gotProfile(accessToken, refreshToken, profile, done) {
 	let dbRowID = 1;
 	done(null, dbRowID); 
 };
-passport.use(new GoogleStrategy(googleLoginData, gotProfile));
+passport.use(new GoogleStrategy(googleSignInData, gotProfile));
 
 app.use(cookieSession({
 	keys: ['apple banana cat dog'],
@@ -31,7 +31,7 @@ module.exports.authGoogle = (function() {
 	return passport.authenticate('google');
 })();
 
-// check if user has logged in, when trying to access personal data
+// check if user has signed in, when trying to access personal data
 module.exports.isAuthenticated = function(req, res, next) {
 	if (req.user) {
 		console.log("Req.session:",req.session);
@@ -39,7 +39,7 @@ module.exports.isAuthenticated = function(req, res, next) {
 		next();
 	}
 	else {
-		res.redirect('/sign-in.html');  // display the login page
+		res.redirect('/sign-in.html');  // display the sign page
 	}
 }
 
@@ -58,6 +58,6 @@ passport.deserializeUser((dbRowID, done) => {
 
 
 module.exports.redirectToUserPage = function(req, res) {
-	console.log('Logged in and using cookies!')
+	console.log('Signed in and using cookies!')
 	res.redirect('/user/main.html');
 };

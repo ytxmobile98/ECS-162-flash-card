@@ -39,7 +39,7 @@ module.exports.isAuthenticated = function(req, res, next) {
 		next();
 	}
 	else {
-		res.redirect('/sign-in.html');  // display the sign page
+		res.redirect('/');  // display the sign page
 	}
 }
 

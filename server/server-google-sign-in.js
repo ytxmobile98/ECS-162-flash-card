@@ -79,6 +79,11 @@ passport.deserializeUser(function(user, done) {
 
 
 module.exports.redirectToUserPage = function(req, res) {
-	console.log('Signed in and using cookies!')
+	console.log('Signed in and using cookies!');
 	res.redirect('/user/main.html');
 };
+
+module.exports.sendUserInfo = function (req, res) {
+	let userInfo = JSON.stringify(req.user);
+	res.send(userInfo);
+}

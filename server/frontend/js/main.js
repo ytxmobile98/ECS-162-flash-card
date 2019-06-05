@@ -4,11 +4,11 @@ import { requestTranslation } from "./translate.js";
 import { requestToSave } from "./save-to-database.js";
 
 const currentFlashCard = Object.seal({
-	"english": "",
-	"translation": "",
+	"English": "",
+	"Chinese": "",
 	"isEmpty": function () {
 		// returns true if either English or translation is empty
-		return ((!this.english) || (!this.translation));
+		return ((!this.English) || (!this.Chinese));
 	}
 });
 
@@ -34,7 +34,21 @@ toAnswerPageButton.addEventListener("click", function () {
 const signOutButton = document.getElementById("js-sign-out-button");
 signOutButton.addEventListener("click", function () {
 	window.location.href = "/auth/sign-out";
-})
+});
+
+const userName = document.getElementById("js-user-name");
+userName.addEventListener("load", (function() {
+	const xhr = new XMLHttpRequest();
+	
+	function displayUserInfo() {
+		let user = JSON.parse(xhr.responseText);
+		userName.textContent = user.firstName;
+		userName.title = `${user.firstName} ${user.lastName} (${user.GoogleID})`
+	}
+	
+	makeRequest(xhr, "/get-user-info", displayUserInfo);
+	
+})()); 
 
 export { currentFlashCard, makeRequest };
 

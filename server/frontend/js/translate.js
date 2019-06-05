@@ -7,8 +7,8 @@ const outputBox = document.getElementById("js-output");
 
 function requestTranslation(str) {
 	// Sample translation request URL:
-	// http://server162.site:port/translate?english=example phrase
-	const url = "translate?english=" + str;
+	// http://server162.site:port/translate?English=example phrase
+	const url = "/translate?English=" + str;
 	
 	const xhr = new XMLHttpRequest();
 	makeRequest(xhr, url, displayTranslation);
@@ -17,8 +17,8 @@ function requestTranslation(str) {
 		outputBox.value = xhr.responseText;
 		// query and output are stored as two internal strings, and are updated only when a request is returned successfully
 		if ((!!queryBox.value) && (!!outputBox.value)) { // check if nonempty
-			currentFlashCard.english = queryBox.value;
-			currentFlashCard.translation = outputBox.value;
+			currentFlashCard.English = queryBox.value;
+			currentFlashCard.Chinese = outputBox.value;
 			console.log(currentFlashCard);
 		}
 	}

@@ -27,6 +27,9 @@ const queryHandler = (function () {
 	app.get("/user/*", googleSignInModule.isAuthenticated, express.static("."));
 	app.get("/user/", googleSignInModule.isAuthenticated, express.static(".", {index: "/main.html"}));
 	
+	// get user info
+	app.get("/get-user-info", googleSignInModule.sendUserInfo);
+	
 	// sign out
 	app.get('/auth/sign-out', function(req, res){
 	  req.logout();

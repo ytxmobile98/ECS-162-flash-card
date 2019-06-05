@@ -3,7 +3,7 @@
 module.exports.translate = function (request, response) {
 	
 	const requestQuery = request.query;
-	const sourceLang = "english";
+	const sourceLang = "English";
 	
 	if (requestQuery.hasOwnProperty(sourceLang)) {
 		
@@ -49,6 +49,6 @@ module.exports.translate = function (request, response) {
 
 	}
 	else {
-		response.send("ERROR: query does not contain property \"english\"");
+		response.send("ERROR: query does not contain property \"English\"");
 	}
 }

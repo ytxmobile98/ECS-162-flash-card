@@ -11,9 +11,10 @@ function requestToSave(currentFlashCard) {
 	}
 	
 	// Sample storing request URL:
-	// http://server162.site:port/store?english=China&chinese=中国
-	const url = "store?english=" + currentFlashCard.english
-		+ "&chinese=" + currentFlashCard.translation;
+	// http://server162.site:port/store?English=China&Chinese=中国
+	const url = "/store?English=" + currentFlashCard.English
+		+ "&Chinese=" + currentFlashCard.Chinese;
+	console.log(url);
 	
 	const xhr = new XMLHttpRequest();
 	makeRequest(xhr, url, savingFeedback);

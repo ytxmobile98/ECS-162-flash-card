@@ -12,9 +12,22 @@ const googleSignInData = {
     callbackURL: '/auth/redirect'
 };
 function gotProfile(accessToken, refreshToken, profile, done) {
-	console.log("Google profile",profile);
-	let dbRowID = 1;
-	done(null, dbRowID); 
+	// display profile in command line
+	console.log("Google profile", profile);
+	
+	let firstName = profile._json.given_name;
+	let lastName = profile._json.family_name;
+	let GoogleID = profile._json.email;
+	
+	// insert user information into the database
+	const addUser = require("./server-database.js").addUser;
+	addUser(firstName, lastName, GoogleID);
+	 
+	done(null, {
+		"firstName": firstName,
+		"lastName": lastName,
+		"GoogleID": GoogleID
+	}); 
 };
 passport.use(new GoogleStrategy(googleSignInData, gotProfile));
 
@@ -25,7 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 module.exports.authGoogleProfile = (function () {
-	return passport.authenticate('google', {scope: ['profile']});
+	return passport.authenticate('google', {scope: ['profile', "email"]});
 })();
 module.exports.authGoogle = (function() {
 	return passport.authenticate('google');
@@ -43,17 +56,25 @@ module.exports.isAuthenticated = function(req, res, next) {
 	}
 }
 
-passport.serializeUser((dbRowID, done) => {
-    console.log("SerializeUser. Input is",dbRowID);
-    done(null, dbRowID);
+// Part of Server's sesssion set-up.  
+// The second operand of "done" becomes the input to deserializeUser
+// on every subsequent HTTP request with this session's cookie. 
+passport.serializeUser(function(user, done) {
+    console.log("SerializeUser. Input is", user);
+    done(null, user);
 });
-passport.deserializeUser((dbRowID, done) => {
-    console.log("deserializeUser. Input is:", dbRowID);
+
+// Called by passport.session pipeline stage on every HTTP request with
+// a current session cookie. 
+// Where we should lookup user database info. 
+// Whatever we pass in the "done" callback becomes req.user
+// and can be used by subsequent middleware.
+passport.deserializeUser(function(user, done) {
+    console.log("deserializeUser. Input is:", user);
     // here is a good place to look up user data in database using
     // dbRowID. Put whatever you want into an object. It ends up
     // as the property "user" of the "req" object. 
-    let userData = {userData: "data from db row goes here"};
-    done(null, userData);
+    done(null, user);
 });
 
 

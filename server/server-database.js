@@ -6,24 +6,49 @@ const fs = require("fs");
 const dbFileName = "Flashcards.db";
 const db = new sqlite3.Database(dbFileName);
 
-const tableName = "Flashcards";
+// Insert word to database
 
-function insert(user, english, chinese) {
-	let insertCmd = "INSERT INTO " + tableName + "(user, english, chinese) VALUES ";
-	let insertValues = "(" + user + ", '" + english + "', '" + chinese + "');";
+function insertWord(user, English, Chinese) {
+	const tableName = "Flashcards";
+	
+	let insertCmd = "INSERT INTO FlashCards (user, English, Chinese) VALUES ";
+	let insertValues = "('" + user + "', '" + English + "', '" + Chinese + "');";
 	insertCmd += insertValues;
 	
 	db.run(insertCmd,
 		function () {
-			console.log("INSERTED: ", user, english, chinese);
+			console.log("INSERTED WORD: ", user, English, Chinese);
 		}
 	);
 }
 
-module.exports.store = function (request, response) {
-	let user = 0;
-	let english = request.query.english;
-	let chinese = request.query.chinese;
+module.exports.store = function (req, res) {
+	console.log(req.user);
 	
-	insert(user, english, chinese);
+	let user = 0;
+	let English = req.query.English;
+	let Chinese = req.query.Chinese;
+	
+	insertWord(user, English, Chinese);
+}
+
+function addUser(firstName, lastName, GoogleID) {
+	const tableName = "Users";
+	
+	let insertCmd = "INSERT INTO Users (firstName, lastName, GoogleID) VALUES ";
+	let insertValues = "('" + firstName + "', '" + lastName + "', '" + GoogleID + "');";
+	insertCmd += insertValues;
+	
+	db.run(insertCmd,
+		function () {
+			console.log("ADDED USER: ", firstName, lastName, GoogleID);
+		}
+	);
+	
+	return GoogleID;
+}
+
+module.exports.addUser = function (firstName, lastName, GoogleID) {
+	addUser(firstName, lastName, GoogleID);
+	return GoogleID;
 }

@@ -23,9 +23,9 @@ function insertWord(user, English, Chinese) {
 }
 
 module.exports.store = function (req, res) {
-	console.log(req.user);
+	console.log("Current user: ", req.user);
 	
-	let user = 0;
+	let user = req.user.GoogleID;
 	let English = req.query.English;
 	let Chinese = req.query.Chinese;
 	

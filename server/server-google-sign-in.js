@@ -60,8 +60,8 @@ module.exports.isAuthenticated = function(req, res, next) {
 // The second operand of "done" becomes the input to deserializeUser
 // on every subsequent HTTP request with this session's cookie. 
 passport.serializeUser(function(user, done) {
-    console.log("SerializeUser. Input is", user);
-    done(null, user);
+	console.log("SerializeUser. Input is", user);
+	done(null, user);
 });
 
 // Called by passport.session pipeline stage on every HTTP request with
@@ -70,11 +70,11 @@ passport.serializeUser(function(user, done) {
 // Whatever we pass in the "done" callback becomes req.user
 // and can be used by subsequent middleware.
 passport.deserializeUser(function(user, done) {
-    console.log("deserializeUser. Input is:", user);
-    // here is a good place to look up user data in database using
-    // dbRowID. Put whatever you want into an object. It ends up
-    // as the property "user" of the "req" object. 
-    done(null, user);
+	console.log("deserializeUser. Input is:", user);
+	// here is a good place to look up user data in database using
+	// dbRowID. Put whatever you want into an object. It ends up
+	// as the property "user" of the "req" object. 
+	done(null, user);
 });
 
 

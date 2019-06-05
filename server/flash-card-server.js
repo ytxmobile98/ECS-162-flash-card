@@ -10,14 +10,6 @@ module.exports.app = app;
 // enclosed in an IIFE
 const queryHandler = (function () {
 	
-	// translate
-	const translateModule = require("./server-translate.js");
-	app.get("/translate", translateModule.translate);
-	
-	// database
-	const databaseModule = require("./server-database.js");
-	app.get("/store", databaseModule.store);
-	
 	// sign in
 	const googleSignInModule = require("./server-google-sign-in.js");
 	app.use("/", express.static("public", {index: "/sign-in.html"}));
@@ -35,6 +27,14 @@ const queryHandler = (function () {
 	  req.logout();
 	  res.redirect('/');
 	});
+	
+	// translate
+	const translateModule = require("./server-translate.js");
+	app.get("/translate", translateModule.translate);
+	
+	// database
+	const databaseModule = require("./server-database.js");
+	app.get("/store", databaseModule.store);
 
 	
 	// LASTLY: if file not found and is not a valid query

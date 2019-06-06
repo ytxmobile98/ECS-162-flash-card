@@ -12,7 +12,9 @@ const currentFlashCard = Object.seal({
 	}
 });
 
-function makeRequest(xhr, url, onloadCallback) {
+function doNothing() {};
+
+function makeRequest(xhr, url, onloadCallback = doNothing) {
 	xhr.overrideMimeType("text/plain");
 	xhr.open("GET", url);
 	

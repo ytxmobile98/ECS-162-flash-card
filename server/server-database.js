@@ -6,10 +6,32 @@ const fs = require("fs");
 const dbFileName = "Flashcards.db";
 const db = new sqlite3.Database(dbFileName);
 
+
+// Add user
+
+function addUser(firstName, lastName, GoogleID) {
+	
+	let insertCmd = "INSERT INTO Users (firstName, lastName, GoogleID) VALUES ";
+	let insertValues = "('" + firstName + "', '" + lastName + "', '" + GoogleID + "');";
+	insertCmd += insertValues;
+	
+	db.run(insertCmd,
+		function () {
+			console.log("ADDED USER: ", firstName, lastName, GoogleID);
+		}
+	);
+	
+	return GoogleID;
+}
+
+module.exports.addUser = function (firstName, lastName, GoogleID) {
+	addUser(firstName, lastName, GoogleID);
+	return GoogleID;
+}
+
 // Insert word to database
 
 function insertWord(user, English, Chinese) {
-	const tableName = "Flashcards";
 	
 	let insertCmd = "INSERT INTO FlashCards (user, English, Chinese) VALUES ";
 	let insertValues = "('" + user + "', '" + English + "', '" + Chinese + "');";
@@ -32,23 +54,34 @@ module.exports.store = function (req, res) {
 	insertWord(user, English, Chinese);
 }
 
-function addUser(firstName, lastName, GoogleID) {
-	const tableName = "Users";
+
+// Find correct English words from database
+
+function findWords(res, user, Chinese) {
 	
-	let insertCmd = "INSERT INTO Users (firstName, lastName, GoogleID) VALUES ";
-	let insertValues = "('" + firstName + "', '" + lastName + "', '" + GoogleID + "');";
-	insertCmd += insertValues;
+	let findCmd = "SELECT DISTINCT English from FlashCards where (user = '" + user + "' and Chinese = '" + Chinese + "') ORDER BY English;"
 	
-	db.run(insertCmd,
-		function () {
-			console.log("ADDED USER: ", firstName, lastName, GoogleID);
-		}
-	);
+	let result = Object.seal({
+		"Chinese": Chinese,
+		"English": []
+	});
 	
-	return GoogleID;
+	db.all(findCmd, function (err, rows) {
+		rows.forEach(function(row) {
+			result.English.push(row);
+		});
+		
+		console.log(result);
+		res.send(result);
+	});
+	
 }
 
-module.exports.addUser = function (firstName, lastName, GoogleID) {
-	addUser(firstName, lastName, GoogleID);
-	return GoogleID;
+module.exports.find = function (req, res) {
+	console.log("Current user: ", req.user);
+	
+	let user = req.user.GoogleID;
+	let Chinese = req.query.Chinese;
+	
+	findWords(res, user, Chinese);
 }

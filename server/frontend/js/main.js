@@ -39,6 +39,7 @@ userName.addEventListener("load", (function() {
 	
 	function displayUserInfo() {
 		let user = JSON.parse(xhr.responseText);
+		console.log(user);
 		userName.textContent = user.firstName;
 		userName.title = `${user.firstName} ${user.lastName} (${user.GoogleID})`
 	}

@@ -84,6 +84,7 @@ module.exports.redirectToUserPage = function(req, res) {
 };
 
 module.exports.sendUserInfo = function (req, res) {
-	let userInfo = JSON.stringify(req.user);
+	let userInfo = req.user;
+	console.log(userInfo);
 	res.send(userInfo);
 }

@@ -35,6 +35,7 @@ const queryHandler = (function () {
 	// database
 	const databaseModule = require("./server-database.js");
 	app.get("/store", databaseModule.store);
+	app.get("/find", databaseModule.find);
 
 	
 	// LASTLY: if file not found and is not a valid query

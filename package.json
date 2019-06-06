@@ -1,0 +1,32 @@
+{
+  "name": "5-flash-card",
+  "version": "1.0.0",
+  "description": "ECS 162 flash card assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ytx21cn/ECS-162-flash-card.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ytx21cn/ECS-162-flash-card/issues"
+  },
+  "homepage": "https://github.com/ytx21cn/ECS-162-flash-card#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react-app": "^3.1.2",
+    "cookie-session": "^1.3.3",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^2.0.0",
+    "request": "^2.88.0",
+    "sqlite3": "^4.0.8"
+  }
+}

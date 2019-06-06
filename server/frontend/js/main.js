@@ -25,17 +25,14 @@ function makeRequest(xhr, url, onloadCallback) {
 	xhr.send();
 }
 
+// Open answer page
 const toAnswerPageButton = document.getElementById("js-to-answer-page-button");
 toAnswerPageButton.addEventListener("click", function () {
 	// This will be changed in the next assignment; now it is simply a page jump
 	window.location.href = "answer.html";
 });
 
-const signOutButton = document.getElementById("js-sign-out-button");
-signOutButton.addEventListener("click", function () {
-	window.location.href = "/auth/sign-out";
-});
-
+// Display user name on the bottom bar
 const userName = document.getElementById("js-user-name");
 userName.addEventListener("load", (function() {
 	const xhr = new XMLHttpRequest();
@@ -48,7 +45,15 @@ userName.addEventListener("load", (function() {
 	
 	makeRequest(xhr, "/get-user-info", displayUserInfo);
 	
-})()); 
+})());
+
+// Sign out
+const signOutButton = document.getElementById("js-sign-out-button");
+signOutButton.addEventListener("click", function () {
+	window.location.href = "/auth/sign-out";
+});
+
+
 
 export { currentFlashCard, makeRequest };
 

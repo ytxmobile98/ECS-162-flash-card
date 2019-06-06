@@ -5,6 +5,7 @@ import { makeRequest, currentFlashCard } from "./main.js";
 const queryBox = document.getElementById("js-query");
 const outputBox = document.getElementById("js-output");
 
+// Request translation
 function requestTranslation(str) {
 	// Sample translation request URL:
 	// http://server162.site:port/translate?English=example phrase
@@ -24,7 +25,6 @@ function requestTranslation(str) {
 	}
 	
 };
-
 queryBox.addEventListener("keyup", function (event) {
 	if (event.key === "Enter") {
 		requestTranslation(queryBox.value);

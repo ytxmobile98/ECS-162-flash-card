@@ -79,7 +79,7 @@ module.exports.find = function (req, res) {
 // Get all flash cards for the current user
 
 function getFlashCards(res, user) {
-	let getFlashCardsCmd = `SELECT DISTINCT Chinese, English from FlashCards where user = "${user}" ORDER BY Chinese;`;
+	let getFlashCardsCmd = `SELECT DISTINCT Chinese, English, seen, correct from FlashCards where user = "${user}" ORDER BY Chinese;`;
 	
 	let flashCards = {};
 	
@@ -88,10 +88,16 @@ function getFlashCards(res, user) {
 			console.log(row);
 			
 			if (!flashCards[row.Chinese]) {
-				flashCards[row.Chinese] = [];
+				flashCards[row.Chinese] = Object.seal({
+					"English": [],
+					"seen": row.seen,
+					"correct": row.correct,
+				});
 			}
 			
-			flashCards[row.Chinese].push(row.English);
+			flashCards[row.Chinese].English.push(row.English);
+			flashCards[row.Chinese].seen = row.seen;
+			flashCards[row.Chinese].correct = row.correct;
 		});
 		
 		console.log(flashCards);
@@ -108,9 +114,19 @@ module.exports.getFlashCards = function (req, res) {
 
 function updateSeen(res, user, Chinese) {
 	let updateSeenCmd = `UPDATE FlashCards SET seen = seen + 1 where user = "${user}" and Chinese = "${Chinese}";`;
-	
 	db.run(updateSeenCmd, function () {
-		res.send(`Updated seen: ${Chinese}`);
+		console.log(`Updated seen: ${Chinese}`);
+	});
+	
+	// send back the Chinese and seen count to front-end
+	let getNewSeenCount = `SELECT DISTINCT Chinese, English, seen from FlashCards where user = "${user}" and Chinese = "${Chinese}" ORDER BY Chinese;`;
+	db.get(getNewSeenCount, function (err, row) {
+		let result = {
+			"Chinese": Chinese,
+			"seen": row.seen
+		};
+		console.log(result);
+		res.send(result);
 	});
 }
 
@@ -124,9 +140,19 @@ module.exports.updateSeen = function (req, res) {
 
 function updateCorrect(res, user, Chinese) {
 	let updateCorrectCmd = `UPDATE FlashCards SET correct = correct + 1 where user = "${user}" and Chinese = "${Chinese}";`;
-	
 	db.run(updateCorrectCmd, function () {
-		res.send(`Updated correct: ${Chinese}`);
+		console.log(`Updated correct: ${Chinese}`);
+	});
+	
+	// send back the Chinese and correct count to front-end
+	let getNewSeenCount = `SELECT DISTINCT Chinese, English, correct from FlashCards where user = "${user}" and Chinese = "${Chinese}" ORDER BY Chinese;`;
+	db.get(getNewSeenCount, function (err, row) {
+		let result = {
+			"Chinese": Chinese,
+			"correct": row.correct
+		};
+		console.log(result);
+		res.send(result);
 	});
 }
 

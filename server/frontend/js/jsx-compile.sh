@@ -31,5 +31,5 @@ echo "Watch directory: $watchDir"
 echo "Press ^D to exit"
 echo
 
-npx babel --watch "$watchDir" --out-dir "$outputDir" --extensions ".jsx" --presets es2017,react
+npx babel --watch "$watchDir" --out-dir "$outputDir" --extensions ".jsx" --presets react
 

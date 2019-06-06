@@ -45,12 +45,9 @@ function insertWord(user, English, Chinese) {
 }
 
 module.exports.store = function (req, res) {
-	console.log("Current user: ", req.user);
-	
 	let user = req.user.GoogleID;
 	let English = req.query.English;
 	let Chinese = req.query.Chinese;
-	
 	insertWord(user, English, Chinese);
 }
 
@@ -68,7 +65,7 @@ function findWords(res, user, Chinese) {
 	
 	db.all(findCmd, function (err, rows) {
 		rows.forEach(function(row) {
-			result.English.push(row);
+			result.English.push(row.English);
 		});
 		
 		console.log(result);
@@ -78,10 +75,35 @@ function findWords(res, user, Chinese) {
 }
 
 module.exports.find = function (req, res) {
-	console.log("Current user: ", req.user);
-	
 	let user = req.user.GoogleID;
 	let Chinese = req.query.Chinese;
-	
 	findWords(res, user, Chinese);
+}
+
+// Get all flash cards for the current user
+
+function getFlashCards(res, user) {
+	let getFlashCardsCmd = "SELECT DISTINCT Chinese, English from FlashCards where user = '" + user + "' ORDER BY Chinese;";
+	
+	let flashCards = {};
+	
+	db.all(getFlashCardsCmd, function (err, rows) {
+		rows.forEach(function (row) {
+			console.log(row);
+			
+			if (!flashCards[row.Chinese]) {
+				flashCards[row.Chinese] = [];
+			}
+			
+			flashCards[row.Chinese].push(row.English);
+		});
+		
+		console.log(flashCards);
+		res.send(flashCards);
+	});
+}
+
+module.exports.getFlashCards = function (req, res) {
+	let user = req.user.GoogleID;
+	getFlashCards(res, user);
 }

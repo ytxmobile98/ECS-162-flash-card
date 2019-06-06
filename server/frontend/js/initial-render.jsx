@@ -2,7 +2,7 @@
 
 import { makeRequest } from "./main.js";
 
-document.addEventListener("load", function() {
+function getFlashCards() {
 	const xhr = new XMLHttpRequest();
 	
 	function logFlashCards() {
@@ -11,4 +11,6 @@ document.addEventListener("load", function() {
 	}
 	
 	makeRequest(xhr, "/get-flash-cards", logFlashCards);
-});
+}
+
+document.body.addEventListener("load", getFlashCards());

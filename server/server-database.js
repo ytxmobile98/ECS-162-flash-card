@@ -106,33 +106,33 @@ module.exports.getFlashCards = function (req, res) {
 
 // Update seen count
 
-function updateSeen(user, Chinese) {
+function updateSeen(res, user, Chinese) {
 	let updateSeenCmd = `UPDATE FlashCards SET seen = seen + 1 where user = "${user}" and Chinese = "${Chinese}";`;
 	
 	db.run(updateSeenCmd, function () {
-		console.log("Updated seen:", Chinese);
+		res.send(`Updated seen: ${Chinese}`);
 	});
 }
 
 module.exports.updateSeen = function (req, res) {
 	let user = req.user.GoogleID;
 	let Chinese = req.query.Chinese;
-	updateSeen(user, Chinese);
+	updateSeen(res, user, Chinese);
 }
 
 // Update correct count
 
-function updateCorrect(user, Chinese) {
+function updateCorrect(res, user, Chinese) {
 	let updateCorrectCmd = `UPDATE FlashCards SET correct = correct + 1 where user = "${user}" and Chinese = "${Chinese}";`;
 	
 	db.run(updateCorrectCmd, function () {
-		console.log("Updated correct:", Chinese);
+		res.send(`Updated correct: ${Chinese}`);
 	});
 }
 
 module.exports.updateCorrect = function (req, res) {
 	let user = req.user.GoogleID;
 	let Chinese = req.query.Chinese;
-	updateCorrect(user, Chinese);
+	updateCorrect(res, user, Chinese);
 }
 

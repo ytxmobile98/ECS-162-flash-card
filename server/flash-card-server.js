@@ -11,16 +11,16 @@ module.exports.app = app;
 const queryHandler = (function () {
 	
 	// sign in
-	const googleSignInModule = require("./server-google-sign-in.js");
+	const GoogleSignInModule = require("./server-google-sign-in.js");
 	app.use("/", express.static("public", {index: "/sign-in.html"}));
-	app.get("/auth/google", googleSignInModule.authGoogleProfile);
-	app.get("/auth/redirect", googleSignInModule.authGoogle, googleSignInModule.redirectToUserPage);
+	app.get("/auth/google", GoogleSignInModule.authGoogleProfile);
+	app.get("/auth/redirect", GoogleSignInModule.authGoogle, GoogleSignInModule.redirectToUserPage);
 	// per-user content is only visible after login
-	app.get("/user/*", googleSignInModule.isAuthenticated, express.static("."));
-	app.get("/user/", googleSignInModule.isAuthenticated, express.static(".", {index: "/main.html"}));
+	app.get("/user/*", GoogleSignInModule.isAuthenticated, express.static("."));
+	app.get("/user/", GoogleSignInModule.isAuthenticated, express.static(".", {index: "/main.html"}));
 	
 	// get user info
-	app.get("/get-user-info", googleSignInModule.sendUserInfo);
+	app.get("/get-user-info", GoogleSignInModule.sendUserInfo);
 	
 	// sign out
 	app.get('/auth/sign-out', function(req, res){
@@ -37,6 +37,8 @@ const queryHandler = (function () {
 	app.get("/store", databaseModule.store);
 	app.get("/find", databaseModule.find);
 	app.get("/get-flash-cards", databaseModule.getFlashCards);
+	app.get("/update-seen", databaseModule.updateSeen);
+	app.get("/update-correct", databaseModule.updateCorrect);
 
 	
 	// LASTLY: if file not found and is not a valid query

@@ -11,11 +11,9 @@ const db = new sqlite3.Database(dbFileName);
 
 function addUser(firstName, lastName, GoogleID) {
 	
-	let insertCmd = "INSERT INTO Users (firstName, lastName, GoogleID) VALUES ";
-	let insertValues = "('" + firstName + "', '" + lastName + "', '" + GoogleID + "');";
-	insertCmd += insertValues;
+	let addUserCmd = `INSERT INTO Users (firstName, lastName, GoogleID) VALUES ("${firstName}", "${lastName}", "${GoogleID}");`;
 	
-	db.run(insertCmd,
+	db.run(addUserCmd,
 		function () {
 			console.log("ADDED USER: ", firstName, lastName, GoogleID);
 		}
@@ -33,11 +31,9 @@ module.exports.addUser = function (firstName, lastName, GoogleID) {
 
 function insertWord(user, English, Chinese) {
 	
-	let insertCmd = "INSERT INTO FlashCards (user, English, Chinese) VALUES ";
-	let insertValues = "('" + user + "', '" + English + "', '" + Chinese + "');";
-	insertCmd += insertValues;
+	let insertWordCmd = `INSERT INTO FlashCards (user, English, Chinese) VALUES ("${user}", "${English}", "${Chinese}");`;
 	
-	db.run(insertCmd,
+	db.run(insertWordCmd,
 		function () {
 			console.log("INSERTED WORD: ", user, English, Chinese);
 		}
@@ -56,7 +52,7 @@ module.exports.store = function (req, res) {
 
 function findWords(res, user, Chinese) {
 	
-	let findCmd = "SELECT DISTINCT English from FlashCards where (user = '" + user + "' and Chinese = '" + Chinese + "') ORDER BY English;"
+	let findCmd = `SELECT DISTINCT English from FlashCards where (user = "${user}" and Chinese = "${Chinese}") ORDER BY English;`;
 	
 	let result = Object.seal({
 		"Chinese": Chinese,
@@ -83,7 +79,7 @@ module.exports.find = function (req, res) {
 // Get all flash cards for the current user
 
 function getFlashCards(res, user) {
-	let getFlashCardsCmd = "SELECT DISTINCT Chinese, English from FlashCards where user = '" + user + "' ORDER BY Chinese;";
+	let getFlashCardsCmd = `SELECT DISTINCT Chinese, English from FlashCards where user = "${user}" ORDER BY Chinese;`;
 	
 	let flashCards = {};
 	
@@ -107,3 +103,36 @@ module.exports.getFlashCards = function (req, res) {
 	let user = req.user.GoogleID;
 	getFlashCards(res, user);
 }
+
+// Update seen count
+
+function updateSeen(user, Chinese) {
+	let updateSeenCmd = `UPDATE FlashCards SET seen = seen + 1 where user = "${user}" and Chinese = "${Chinese}";`;
+	
+	db.run(updateSeenCmd, function () {
+		console.log("Updated seen:", Chinese);
+	});
+}
+
+module.exports.updateSeen = function (req, res) {
+	let user = req.user.GoogleID;
+	let Chinese = req.query.Chinese;
+	updateSeen(user, Chinese);
+}
+
+// Update correct count
+
+function updateCorrect(user, Chinese) {
+	let updateCorrectCmd = `UPDATE FlashCards SET correct = correct + 1 where user = "${user}" and Chinese = "${Chinese}";`;
+	
+	db.run(updateCorrectCmd, function () {
+		console.log("Updated correct:", Chinese);
+	});
+}
+
+module.exports.updateCorrect = function (req, res) {
+	let user = req.user.GoogleID;
+	let Chinese = req.query.Chinese;
+	updateCorrect(user, Chinese);
+}
+

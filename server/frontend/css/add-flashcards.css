@@ -12,27 +12,24 @@
 .ui-main {
 	margin: auto;
 	width: 80%;
-	max-width: 500px;
+	max-width: 800px;
 }
 
 /* The flash cards */
 
 .flashcard__card {
-	margin: 5pt;
+	margin: 20pt;
 }
 
-.flashcard__card--translation {
-	height: 160px;
-}
-
-.flashcard__card--english {
-	height: 80px;
-}
-
-.flashcard__flip-card-icon {
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 50px;
-	cursor: pointer;
+@media screen and (min-width: 600px) {
+	.flashcard__flexbox {
+		display: flex;
+		flex-direction: row;
+	}
+	.flashcard__card:first-child {
+		margin-left: 0;
+	}
+	.flashcard__card:last-child {
+		margin-right: 0;
+	}
 }

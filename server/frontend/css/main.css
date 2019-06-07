@@ -9,25 +9,53 @@
 
 /* The main UI */
 
-.ui-main {
-	margin: auto 10%;
+[data-js-current-view="add-words"] .ui-main {
+	margin: auto;
+	width: 80%;
+	max-width: 800px;
+}
+
+[data-js-current-view="review"] .ui-main {
+	margin: auto;
+	width: 80%;
+	max-width: 500px;
 }
 
 /* The flash cards */
 
-.flashcard__card {
+[data-js-current-view="add-words"] .flashcard__card {
 	margin: 20pt;
 }
 
+[data-js-current-view="review"] .flashcard__card {
+	margin: 5pt;
+}
+
+.flashcard__card--translation {
+	height: 160px;
+}
+
+.flashcard__card--english {
+	height: 80px;
+}
+
+.flashcard__flip-card-icon {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 50px;
+	cursor: pointer;
+}
+
 @media screen and (min-width: 600px) {
-	.flashcard__flexbox {
+	[data-js-current-view="add-words"] .flashcard__flexbox {
 		display: flex;
 		flex-direction: row;
 	}
-	.flashcard__card:first-child {
+	[data-js-current-view="add-words"] .flashcard__card:first-child {
 		margin-left: 0;
 	}
-	.flashcard__card:last-child {
+	[data-js-current-view="add-words"] .flashcard__card:last-child {
 		margin-right: 0;
 	}
 }

@@ -8,36 +8,41 @@
 		<title>Main Page</title>
 	</head>
 
-	<body class="t-font--primary">
+	<body class="t-font--primary" data-js-current-view="add-words">
 		
 		<header class="ui-header">
-			<button id="js-to-answer-page-button" class="ui-button ui-header__switch-view-button t-font--primary">Start Review</button>
+			<button id="js-switch-view-button" class="ui-button ui-header__switch-view-button t-font--primary">Start Review</button>
 			<h1 class="ui-header__page-name t-font--header">Lango!</h1>
 			<button id="js-sign-out-button" class="ui-button ui-header__sign-out-button t-font--primary">Sign Out</button>
 		</header>
 		
-		<main class="ui-main" id="js-ui-main">
-			<div class="flashcard__flexbox">
-				<div class="flashcard__card" title="Press ENTER to translate">
-					<input id="js-query" class="flashcard__textbox t-font--primary" type="text" autocomplete="off" placeholder="English" />
+		<main id="js-ui-main">
+			<!--<div class="ui-main">
+				<div class="flashcard__flexbox">
+					<div class="flashcard__card" title="Press ENTER to translate">
+						<input id="js-query" class="flashcard__textbox t-font--primary" type="text" autocomplete="off" placeholder="English" />
+					</div>
+					<div class="flashcard__card">
+						<input id="js-output" class="flashcard__textbox t-font--primary" type="text" autocomplete="off" placeholder="Chinese 中文" readonly="readonly" />
+					</div>
 				</div>
-				<div class="flashcard__card">
-					<input id="js-output" class="flashcard__textbox t-font--primary" type="text" autocomplete="off" placeholder="Chinese 中文" readonly="readonly" />
-				</div>
-			</div>
-			
-			<p class="primary-action-button__par">
-				<button id="js-save" class="ui-button primary-action-button t-font--primary">Save</button>
-			</p>
+				
+				<p class="primary-action-button__par">
+					<button id="js-save" class="ui-button primary-action-button t-font--primary">Save</button>
+				</p>
+			</div>-->
 		</main>
 		
 		
 		<footer class="ui-footer">
 			<div id="js-user-name" class="user-name-bar" title="firstName lastName (user@example.com)">firstName</div>
 		</footer>
-
+		
+		<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+		<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+		
 		<script type="module" src="js/main.js"></script>
-		<script type="module" src="js/initial-render.js"></script>
+		<script type="module" src="js/switch-view.js"></script>
 		
 	</body>
 

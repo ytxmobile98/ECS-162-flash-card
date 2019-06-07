@@ -2,7 +2,7 @@
 
 import { makeRequest, currentFlashCard } from "./main.js";
 
-const saveButton = document.getElementById("js-save");
+// Request to save
 
 function requestToSave(currentFlashCard) {
 	
@@ -25,14 +25,5 @@ function requestToSave(currentFlashCard) {
 		console.log("Saved: ", currentFlashCard);
 	}
 }
-
-saveButton.addEventListener("click", function () {
-	try {
-		requestToSave(currentFlashCard);
-	}
-	catch (error) {
-		console.log(error);
-	}
-});
 
 export { requestToSave };

@@ -27,12 +27,6 @@ function makeRequest(xhr, url, onloadCallback = doNothing) {
 	xhr.send();
 }
 
-// Open answer page
-const toAnswerPageButton = document.getElementById("js-to-answer-page-button");
-toAnswerPageButton.addEventListener("click", function () {
-	// This will be changed in the next assignment; now it is simply a page jump
-	window.location.href = "answer.html";
-});
 
 // Display user name on the bottom bar
 const userName = document.getElementById("js-user-name");

@@ -50,7 +50,7 @@ class ReviewTranslationCard extends Card {
 		return (
 			<div className="flashcard__card flashcard__card--translation">
 				<input ref={this.reviewTranslationBox} className="flashcard__textbox t-font--primary" type="text" placeholder="Translation" readonly="readonly" />
-				<img className="flashcard__flip-card-icon" src="icons/flip-card.svg" alt="Flip card" onClick={this.props.onFlipCard} />
+				<img onClick={this.props.onFlipCard} className="flashcard__flip-card-icon" src="icons/flip-card.svg" alt="Flip card" />
 			</div>
 		);
 	}
@@ -188,7 +188,7 @@ class ReviewPage extends React.Component {
 				</div>
 				
 				<p className="primary-action-button__par">
-					<button id="js-next" className="ui-button primary-action-button t-font--primary" onClick={this.displayNextCard.bind(this)}>Next</button>
+					<button id="js-next" onClick={this.displayNextCard.bind(this)} className="ui-button primary-action-button t-font--primary">Next</button>
 				</p>
 			</div>
 		);

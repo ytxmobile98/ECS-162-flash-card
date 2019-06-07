@@ -50,7 +50,7 @@ class ReviewTranslationCard extends Card {
 			"div",
 			{ className: "flashcard__card flashcard__card--translation" },
 			React.createElement("input", { ref: this.reviewTranslationBox, className: "flashcard__textbox t-font--primary", type: "text", placeholder: "Translation", readonly: "readonly" }),
-			React.createElement("img", { className: "flashcard__flip-card-icon", src: "icons/flip-card.svg", alt: "Flip card", onClick: this.props.onFlipCard })
+			React.createElement("img", { onClick: this.props.onFlipCard, className: "flashcard__flip-card-icon", src: "icons/flip-card.svg", alt: "Flip card" })
 		);
 	}
 }
@@ -198,7 +198,7 @@ class ReviewPage extends React.Component {
 				{ className: "primary-action-button__par" },
 				React.createElement(
 					"button",
-					{ id: "js-next", className: "ui-button primary-action-button t-font--primary", onClick: this.displayNextCard.bind(this) },
+					{ id: "js-next", onClick: this.displayNextCard.bind(this), className: "ui-button primary-action-button t-font--primary" },
 					"Next"
 				)
 			)

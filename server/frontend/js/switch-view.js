@@ -70,14 +70,36 @@ class AnswerCard extends Card {
 	}
 }
 
+// Button components
+
+class Button extends React.Component {}
+
+class PrimaryActionButton extends Button {
+	constructor(props) {
+		super(props);
+		this.button = React.createRef();
+	}
+
+	render() {
+		return React.createElement(
+			"button",
+			{ ref: this.button, onClick: this.props.onClick, className: "ui-button primary-action-button t-font--primary" },
+			this.props.text
+		);
+	}
+}
+
 // Page components
 
-class AddWordsPage extends React.Component {
+class Page extends React.Component {}
+
+class AddWordsPage extends Page {
 
 	constructor(props) {
 		super(props);
 		this.queryCard = React.createRef();
 		this.outputCard = React.createRef();
+		this.saveButton = React.createRef();
 	}
 
 	translate(event) {
@@ -113,25 +135,23 @@ class AddWordsPage extends React.Component {
 			React.createElement(
 				"p",
 				{ className: "primary-action-button__par" },
-				React.createElement(
-					"button",
-					{ id: "js-save", onClick: this.saveToDatabase, className: "ui-button primary-action-button t-font--primary" },
-					"Save"
-				)
+				React.createElement(PrimaryActionButton, { ref: this.saveButton, onClick: this.saveToDatabase, text: "Save" })
 			)
 		);
 	}
 }
 
-class ReviewPage extends React.Component {
+class ReviewPage extends Page {
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			cardOnDisplay: {}
 		};
+
 		this.reviewTranslationCard = React.createRef();
 		this.answerCard = React.createRef();
+		this.nextCardButton = React.createRef();
 	}
 
 	displayNextCard() {
@@ -180,6 +200,11 @@ class ReviewPage extends React.Component {
 		let isCorrect = this.checkCorrect(answerBox.value);
 	}
 
+	componentDidMount() {
+		const nextCardButton = this.nextCardButton.current.button.current;
+		nextCardButton.click();
+	}
+
 	render() {
 
 		setSwitchViewButton("add-words");
@@ -196,11 +221,7 @@ class ReviewPage extends React.Component {
 			React.createElement(
 				"p",
 				{ className: "primary-action-button__par" },
-				React.createElement(
-					"button",
-					{ id: "js-next", onClick: this.displayNextCard.bind(this), className: "ui-button primary-action-button t-font--primary" },
-					"Next"
-				)
+				React.createElement(PrimaryActionButton, { ref: this.nextCardButton, onClick: this.displayNextCard.bind(this), text: "Next" })
 			)
 		);
 	}
@@ -225,10 +246,6 @@ const UIMain = document.getElementById("js-ui-main");
 function setUIMainView(view) {
 	document.body.setAttribute("data-js-current-view", view);
 	ReactDOM.render(React.createElement(View, { switchTo: view }), UIMain);
-	if (view === "review") {
-		const nextWordButton = document.getElementById("js-next");
-		nextWordButton.click();
-	}
 }
 
 function setSwitchViewButton(view) {

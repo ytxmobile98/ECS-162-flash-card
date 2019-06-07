@@ -3,6 +3,7 @@
 import { currentFlashCard, makeRequest } from "./main.js";
 import { requestTranslation } from "./translate.js";
 import { requestToSave } from "./save-to-database.js";
+import { requestFlashCards } from "./review-words.js";
 
 function AddWordsPage(props) {
 
@@ -91,10 +92,6 @@ function ReviewPage(props) {
 class View extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			user: "",
-			flashCards: {}
-		};
 	}
 
 	render() {
@@ -120,27 +117,22 @@ function setSwitchViewButton(view) {
 		switchViewButton.textContent = "Add";
 		switchViewButton.onclick = function () {
 			setUIMainView("add-words");
+			requestFlashCards();
 		};
 	} else {
 		switchViewButton.textContent = "Start Review";
 		switchViewButton.onclick = function () {
 			setUIMainView("review");
+			requestFlashCards();
 		};
 	}
 }
 
 // Initial loading
 
-UIMain.addEventListener("load", function () {
-	const xhr = new XMLHttpRequest();
-
-	function renderInitialView() {
-		let flashCards = JSON.parse(xhr.responseText);
-		console.log(flashCards);
-
-		let view = xhr.responseText === "{}" ? "add-words" : "review";
-		setUIMainView(view);
-	}
-
-	makeRequest(xhr, "/get-flash-cards", renderInitialView);
-}());
+// Render the initial view from an xhr fresponse
+function renderInitialView(xhr) {
+	let view = xhr.responseText === "{}" ? "add-words" : "review";
+	setUIMainView(view);
+}
+UIMain.addEventListener("load", requestFlashCards(renderInitialView));

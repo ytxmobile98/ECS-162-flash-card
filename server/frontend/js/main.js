@@ -52,5 +52,5 @@ signOutButton.addEventListener("click", function () {
 
 
 
-export { currentFlashCard, makeRequest };
+export { currentFlashCard, makeRequest, doNothing };
 

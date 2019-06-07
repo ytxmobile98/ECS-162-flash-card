@@ -1,8 +1,5 @@
 "use strict";
 
-import { requestTranslation } from "./translate.js";
-import { requestToSave } from "./save-to-database.js";
-
 const currentFlashCard = Object.seal({
 	"English": "",
 	"Chinese": "",

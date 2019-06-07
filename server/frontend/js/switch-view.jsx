@@ -5,68 +5,161 @@ import { requestTranslation } from "./translate.js";
 import { requestToSave } from "./save-to-database.js";
 import { requestFlashCards, getNextCard } from "./review-words.js";
 
-let currentCard = {};
+// Card Components
 
-function AddWordsPage(props) {
-	
-	setSwitchViewButton("review");
-	
-	function translate(event) {
-		const queryBox = document.getElementById("js-query");
-		const outputBox = document.getElementById("js-output");
-		
-		if (event.key === "Enter") {
-			requestTranslation(event.target.value, queryBox, outputBox);
-		}
+class Card extends React.Component {
+}
+
+class QueryCard extends Card {
+	constructor(props) {
+		super(props);
+		this.queryBox = React.createRef();
 	}
 	
-	function saveToDatabase() {
-		try {
-			requestToSave(currentFlashCard);
-		}
-		catch (error) {
-			console.log(error);
-		}
-	}
-	
-	return (
-		<div className="ui-main">
-			<div className="flashcard__flexbox">
-				<div className="flashcard__card" title="Press ENTER to translate">
-					<input id="js-query" onKeyUp={translate} className="flashcard__textbox t-font--primary" type="text" autocomplete="off" placeholder="English" />
-				</div>
-				<div className="flashcard__card">
-					<input id="js-output" className="flashcard__textbox t-font--primary" type="text" autocomplete="off" placeholder="Chinese 中文" readonly="readonly" />
-				</div>
+	render() {
+		return (
+			<div className="flashcard__card" title="Press ENTER to translate">
+				<input ref={this.queryBox} className="flashcard__textbox t-font--primary" type="text" autocomplete="off" placeholder="English" />
 			</div>
-			
-			<p className="primary-action-button__par">
-				<button id="js-save" onClick={saveToDatabase} className="ui-button primary-action-button t-font--primary">Save</button>
-			</p>
-		</div>
-	);
+		);
+	}
+}
+
+class OutputCard extends Card {
+	constructor(props) {
+		super(props);
+		this.outputBox = React.createRef();
+	}
+	
+	render() {
+		return (
+			<div className="flashcard__card">
+				<input ref={this.outputBox} className="flashcard__textbox t-font--primary" type="text" autocomplete="off" placeholder="Chinese 中文" readonly="readonly" />
+			</div>
+		);
+	}
+}
+
+class ReviewTranslationCard extends Card {
+	constructor(props) {
+		super(props);
+		this.reviewTranslationBox = React.createRef();
+	}
+	
+	render() {
+		return (
+			<div className="flashcard__card flashcard__card--translation">
+				<input id="js-translation" ref={this.reviewTranslationBox} className="flashcard__textbox t-font--primary" type="text" placeholder="Translation" readonly="readonly" />
+				<img className="flashcard__flip-card-icon" src="icons/flip-card.svg" alt="Flip card" />
+			</div>
+		);
+	}
+}
+
+class AnswerCard extends Card {
+	constructor(props) {
+		super(props);
+		this.answerBox = React.createRef();
+	}
+	
+	render() {
+		return (
+			<div className="flashcard__card flashcard__card--english">
+				<input id="js-answer" ref={this.answerBox} className="flashcard__textbox t-font--primary" type="text" placeholder="English" />
+			</div>
+		);
+	}
+}
+
+// Page components
+
+class AddWordsPage extends React.Component {
+	
+	constructor(props) {
+		super(props);
+		this.queryCard = React.createRef();
+		this.outputCard = React.createRef();
+	}
+	
+	componentDidMount() {
+		
+		const queryBox = this.queryCard.current.queryBox.current;
+		const outputBox = this.outputCard.current.outputBox.current;
+		
+		function translate(event) {
+			if (event.key === "Enter") {
+				requestTranslation(event.target.value, queryBox, outputBox);
+			}
+		}
+		queryBox.onkeyup = translate;
+		
+	}
+	
+	render() {
+		
+		setSwitchViewButton("review");
+		
+		
+		function saveToDatabase() {
+			try {
+				requestToSave(currentFlashCard);
+			}
+			catch (error) {
+				console.log(error);
+			}
+		}
+		
+		return (
+			<div className="ui-main">
+				<div className="flashcard__flexbox">
+					<QueryCard ref={this.queryCard} />
+					<OutputCard ref={this.outputCard} />
+				</div>
+				
+				<p className="primary-action-button__par">
+					<button id="js-save" onClick={saveToDatabase} className="ui-button primary-action-button t-font--primary">Save</button>
+				</p>
+			</div>
+		);
+	}
 }
 	
-function ReviewPage(props) {
+class ReviewPage extends React.Component {
 	
-	setSwitchViewButton("add-words");
+	constructor(props) {
+		super(props);
+		this.state = {
+			cardOnDisplay: {},
+		}
+		this.reviewTranslationCard = React.createRef();
+		this.answerCard = React.createRef();
+	}
 	
-	
-	function displayNextCard() {
-		currentCard = getNextCard();
-		const translation = document.getElementById("js-translation");
-		let Chinese = currentCard.Chinese;
-		translation.value = Chinese;
+	displayNextCard() {
 		
-		const xhr = new XMLHttpRequest();
-		makeRequest(xhr, `/update-seen?Chinese=${Chinese}`, function() {
-			console.log(xhr.response);
-			requestFlashCards();
+		this.setState(function (prevState){
+			return {
+				cardOnDisplay: getNextCard(),
+			}
+		});
+		
+		this.setState(function (prevState) {
+			const cardOnDisplay = prevState.cardOnDisplay;
+			const translation = document.getElementById("js-translation");
+			let Chinese = cardOnDisplay.Chinese;
+			translation.value = Chinese;
+			
+			const xhr = new XMLHttpRequest();
+			makeRequest(xhr, `/update-seen?Chinese=${Chinese}`, function() {
+				console.log(xhr.response);
+				requestFlashCards();
+			});
 		});
 	}
 	
-	function checkCorrect(answer) {
-		let EnglishWords = currentCard.details.English;
+	checkCorrect(answer) {
+		const cardOnDisplay = this.state.cardOnDisplay;
+		let EnglishWords = cardOnDisplay.details.English;
 		let isCorrect = (!!EnglishWords) && EnglishWords.includes(answer);
 		
 		if (isCorrect) {
@@ -83,30 +176,37 @@ function ReviewPage(props) {
 		return isCorrect;
 	}
 	
-	function flipCard() {
+	flipCard() {
 		const answer = document.getElementById("js-answer");
-		let isCorrect = checkCorrect(answer.value);
+		let isCorrect = this.checkCorrect(answer.value);
 	}
 	
-
-	return (
-		<div className="ui-main">
-			<div className="flashcard__flexbox">
-				<div className="flashcard__card flashcard__card--translation">
-					<input id="js-translation" className="flashcard__textbox t-font--primary" type="text" placeholder="Translation" readonly="readonly" />
-					<img className="flashcard__flip-card-icon" src="icons/flip-card.svg" alt="Flip card" onClick={flipCard}/>
+	render() {
+		
+		setSwitchViewButton("add-words");
+	
+		return (
+			<div className="ui-main">
+				<div className="flashcard__flexbox">
+					<ReviewTranslationCard />
+					/*
+					<div className="flashcard__card flashcard__card--translation">
+						<input id="js-translation" className="flashcard__textbox t-font--primary" type="text" placeholder="Translation" readonly="readonly" />
+						<img className="flashcard__flip-card-icon" src="icons/flip-card.svg" alt="Flip card" onClick={this.flipCard.bind(this)}/>
+					</div>*/
+					
+				
+					<div className="flashcard__card flashcard__card--english">
+						<input id="js-answer" className="flashcard__textbox t-font--primary" type="text" placeholder="English" />
+					</div>
 				</div>
-			
-				<div className="flashcard__card flashcard__card--english">
-					<input id="js-answer" className="flashcard__textbox t-font--primary" type="text" placeholder="English" />
-				</div>
+				
+				<p className="primary-action-button__par">
+					<button id="js-next" className="ui-button primary-action-button t-font--primary" onClick={this.displayNextCard.bind(this)}>Next</button>
+				</p>
 			</div>
-			
-			<p className="primary-action-button__par">
-				<button id="js-next" className="ui-button primary-action-button t-font--primary" onClick={displayNextCard}>Next</button>
-			</p>
-		</div>
-	);
+		);
+	}
 }
 
 
@@ -154,7 +254,7 @@ function setSwitchViewButton(view) {
 
 // Initial loading
 
-// Render the initial view from an xhr fresponse
+// Render the initial view from an xhr response
 function renderInitialView(xhr) {
 	let view = (xhr.responseText === "{}") ? "add-words" : "review";
 	setUIMainView(view);

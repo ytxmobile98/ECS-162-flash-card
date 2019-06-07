@@ -49,7 +49,7 @@ class ReviewTranslationCard extends Card {
 		return React.createElement(
 			"div",
 			{ className: "flashcard__card flashcard__card--translation" },
-			React.createElement("input", { id: "js-translation", ref: this.reviewTranslationBox, className: "flashcard__textbox t-font--primary", type: "text", placeholder: "Translation", readonly: "readonly" }),
+			React.createElement("input", { ref: this.reviewTranslationBox, className: "flashcard__textbox t-font--primary", type: "text", placeholder: "Translation", readonly: "readonly" }),
 			React.createElement("img", { className: "flashcard__flip-card-icon", src: "icons/flip-card.svg", alt: "Flip card", onClick: this.props.onFlipCard })
 		);
 	}
@@ -65,7 +65,7 @@ class AnswerCard extends Card {
 		return React.createElement(
 			"div",
 			{ className: "flashcard__card flashcard__card--english" },
-			React.createElement("input", { id: "js-answer", ref: this.answerBox, className: "flashcard__textbox t-font--primary", type: "text", placeholder: "English" })
+			React.createElement("input", { ref: this.answerBox, className: "flashcard__textbox t-font--primary", type: "text", placeholder: "English" })
 		);
 	}
 }
@@ -144,7 +144,7 @@ class ReviewPage extends React.Component {
 
 		this.setState(function (prevState) {
 			const cardOnDisplay = prevState.cardOnDisplay;
-			const translation = document.getElementById("js-translation");
+			const translation = this.reviewTranslationCard.current.reviewTranslationBox.current;
 			let Chinese = cardOnDisplay.Chinese;
 			translation.value = Chinese;
 
@@ -162,7 +162,7 @@ class ReviewPage extends React.Component {
 		let isCorrect = !!EnglishWords && EnglishWords.includes(answer);
 
 		if (isCorrect) {
-			const translation = document.getElementById("js-translation");
+			const translation = this.reviewTranslationCard.current.reviewTranslationBox.current;
 			let Chinese = translation.value;
 
 			const xhr = new XMLHttpRequest();

@@ -49,7 +49,7 @@ class ReviewTranslationCard extends Card {
 	render() {
 		return (
 			<div className="flashcard__card flashcard__card--translation">
-				<input id="js-translation" ref={this.reviewTranslationBox} className="flashcard__textbox t-font--primary" type="text" placeholder="Translation" readonly="readonly" />
+				<input ref={this.reviewTranslationBox} className="flashcard__textbox t-font--primary" type="text" placeholder="Translation" readonly="readonly" />
 				<img className="flashcard__flip-card-icon" src="icons/flip-card.svg" alt="Flip card" onClick={this.props.onFlipCard} />
 			</div>
 		);
@@ -65,7 +65,7 @@ class AnswerCard extends Card {
 	render() {
 		return (
 			<div className="flashcard__card flashcard__card--english">
-				<input id="js-answer" ref={this.answerBox} className="flashcard__textbox t-font--primary" type="text" placeholder="English" />
+				<input ref={this.answerBox} className="flashcard__textbox t-font--primary" type="text" placeholder="English" />
 			</div>
 		);
 	}
@@ -140,7 +140,7 @@ class ReviewPage extends React.Component {
 		
 		this.setState(function (prevState) {
 			const cardOnDisplay = prevState.cardOnDisplay;
-			const translation = document.getElementById("js-translation");
+			const translation = this.reviewTranslationCard.current.reviewTranslationBox.current;
 			let Chinese = cardOnDisplay.Chinese;
 			translation.value = Chinese;
 			
@@ -158,7 +158,7 @@ class ReviewPage extends React.Component {
 		let isCorrect = (!!EnglishWords) && EnglishWords.includes(answer);
 		
 		if (isCorrect) {
-			const translation = document.getElementById("js-translation");
+			const translation = this.reviewTranslationCard.current.reviewTranslationBox.current;
 			let Chinese = translation.value;
 			
 			const xhr = new XMLHttpRequest();

@@ -90,19 +90,20 @@ class AddWordsPage extends React.Component {
 		}
 	}
 	
+	saveToDatabase() {
+		try {
+			requestToSave(currentFlashCard);
+		}
+		catch (error) {
+			console.log(error);
+		}
+	}
+	
+	
 	render() {
 		
 		setSwitchViewButton("review");
 		
-		
-		function saveToDatabase() {
-			try {
-				requestToSave(currentFlashCard);
-			}
-			catch (error) {
-				console.log(error);
-			}
-		}
 		
 		return (
 			<div className="ui-main">
@@ -112,7 +113,7 @@ class AddWordsPage extends React.Component {
 				</div>
 				
 				<p className="primary-action-button__par">
-					<button id="js-save" onClick={saveToDatabase} className="ui-button primary-action-button t-font--primary">Save</button>
+					<button id="js-save" onClick={this.saveToDatabase} className="ui-button primary-action-button t-font--primary">Save</button>
 				</p>
 			</div>
 		);

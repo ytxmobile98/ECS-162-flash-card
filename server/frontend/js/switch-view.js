@@ -19,7 +19,7 @@ class QueryCard extends Card {
 		return React.createElement(
 			"div",
 			{ className: "flashcard__card", title: "Press ENTER to translate" },
-			React.createElement("input", { ref: this.queryBox, className: "flashcard__textbox t-font--primary", type: "text", autocomplete: "off", placeholder: "English" })
+			React.createElement("input", { ref: this.queryBox, className: "flashcard__textbox t-font--primary", type: "text", autocomplete: "off", placeholder: "English", onKeyUp: this.props.onPressEnter })
 		);
 	}
 }
@@ -80,17 +80,13 @@ class AddWordsPage extends React.Component {
 		this.outputCard = React.createRef();
 	}
 
-	componentDidMount() {
-
+	translate(event) {
 		const queryBox = this.queryCard.current.queryBox.current;
 		const outputBox = this.outputCard.current.outputBox.current;
 
-		function translate(event) {
-			if (event.key === "Enter") {
-				requestTranslation(event.target.value, queryBox, outputBox);
-			}
+		if (event.key === "Enter") {
+			requestTranslation(event.target.value, queryBox, outputBox);
 		}
-		queryBox.onkeyup = translate;
 	}
 
 	render() {
@@ -111,7 +107,7 @@ class AddWordsPage extends React.Component {
 			React.createElement(
 				"div",
 				{ className: "flashcard__flexbox" },
-				React.createElement(QueryCard, { ref: this.queryCard }),
+				React.createElement(QueryCard, { ref: this.queryCard, onPressEnter: this.translate.bind(this) }),
 				React.createElement(OutputCard, { ref: this.outputCard })
 			),
 			React.createElement(

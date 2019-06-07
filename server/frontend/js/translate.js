@@ -3,7 +3,7 @@
 import { makeRequest, currentFlashCard } from "./main.js";
 
 // Request translation
-function requestTranslation(str, inputField = queryBox, outputField = outputBox) {
+function requestTranslation(str, inputField, outputField) {
 
 	// Sample translation request URL:
 	// http://server162.site:port/translate?English=example phrase

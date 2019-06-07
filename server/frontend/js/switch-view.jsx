@@ -50,7 +50,7 @@ class ReviewTranslationCard extends Card {
 		return (
 			<div className="flashcard__card flashcard__card--translation">
 				<input id="js-translation" ref={this.reviewTranslationBox} className="flashcard__textbox t-font--primary" type="text" placeholder="Translation" readonly="readonly" />
-				<img className="flashcard__flip-card-icon" src="icons/flip-card.svg" alt="Flip card" />
+				<img className="flashcard__flip-card-icon" src="icons/flip-card.svg" alt="Flip card" onClick={this.props.onFlipCard} />
 			</div>
 		);
 	}
@@ -177,8 +177,8 @@ class ReviewPage extends React.Component {
 	}
 	
 	flipCard() {
-		const answer = document.getElementById("js-answer");
-		let isCorrect = this.checkCorrect(answer.value);
+		const answerBox = this.answerCard.current.answerBox.current;
+		let isCorrect = this.checkCorrect(answerBox.value);
 	}
 	
 	render() {
@@ -188,17 +188,8 @@ class ReviewPage extends React.Component {
 		return (
 			<div className="ui-main">
 				<div className="flashcard__flexbox">
-					<ReviewTranslationCard />
-					/*
-					<div className="flashcard__card flashcard__card--translation">
-						<input id="js-translation" className="flashcard__textbox t-font--primary" type="text" placeholder="Translation" readonly="readonly" />
-						<img className="flashcard__flip-card-icon" src="icons/flip-card.svg" alt="Flip card" onClick={this.flipCard.bind(this)}/>
-					</div>*/
-					
-				
-					<div className="flashcard__card flashcard__card--english">
-						<input id="js-answer" className="flashcard__textbox t-font--primary" type="text" placeholder="English" />
-					</div>
+					<ReviewTranslationCard ref={this.reviewTranslationCard} onFlipCard={this.flipCard.bind(this)} />
+					<AnswerCard ref={this.answerCard} />
 				</div>
 				
 				<p className="primary-action-button__par">

@@ -50,7 +50,7 @@ class ReviewTranslationCard extends Card {
 			"div",
 			{ className: "flashcard__card flashcard__card--translation" },
 			React.createElement("input", { id: "js-translation", ref: this.reviewTranslationBox, className: "flashcard__textbox t-font--primary", type: "text", placeholder: "Translation", readonly: "readonly" }),
-			React.createElement("img", { className: "flashcard__flip-card-icon", src: "icons/flip-card.svg", alt: "Flip card" })
+			React.createElement("img", { className: "flashcard__flip-card-icon", src: "icons/flip-card.svg", alt: "Flip card", onClick: this.props.onFlipCard })
 		);
 	}
 }
@@ -180,8 +180,8 @@ class ReviewPage extends React.Component {
 	}
 
 	flipCard() {
-		const answer = document.getElementById("js-answer");
-		let isCorrect = this.checkCorrect(answer.value);
+		const answerBox = this.answerCard.current.answerBox.current;
+		let isCorrect = this.checkCorrect(answerBox.value);
 	}
 
 	render() {
@@ -194,20 +194,8 @@ class ReviewPage extends React.Component {
 			React.createElement(
 				"div",
 				{ className: "flashcard__flexbox" },
-				React.createElement(ReviewTranslationCard, null),
-				"/*",
-				React.createElement(
-					"div",
-					{ className: "flashcard__card flashcard__card--translation" },
-					React.createElement("input", { id: "js-translation", className: "flashcard__textbox t-font--primary", type: "text", placeholder: "Translation", readonly: "readonly" }),
-					React.createElement("img", { className: "flashcard__flip-card-icon", src: "icons/flip-card.svg", alt: "Flip card", onClick: this.flipCard.bind(this) })
-				),
-				"*/",
-				React.createElement(
-					"div",
-					{ className: "flashcard__card flashcard__card--english" },
-					React.createElement("input", { id: "js-answer", className: "flashcard__textbox t-font--primary", type: "text", placeholder: "English" })
-				)
+				React.createElement(ReviewTranslationCard, { ref: this.reviewTranslationCard, onFlipCard: this.flipCard.bind(this) }),
+				React.createElement(AnswerCard, { ref: this.answerCard })
 			),
 			React.createElement(
 				"p",

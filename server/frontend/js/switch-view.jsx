@@ -57,7 +57,9 @@ class ReviewTranslationCard extends Card {
 						<div className="flashcard__side-content--back" data-js-is-correct={this.props.isCorrect ? true : null}>{this.props.feedback}</div>
 					</div>
 				</div>
-				<img onClick={this.props.onFlipCard} className="flashcard__flip-card-icon" src="icons/flip-card.svg" alt="Flip card" />
+				<a href="#" className="flashcard__flip-card-icon" tabIndex="2" onClick={this.props.onFlipCard}>
+					<img className="flashcard__flip-card-icon" src="icons/flip-card.svg" alt="Flip card"/>
+				</a>
 			</div>
 		);
 	}
@@ -72,7 +74,7 @@ class AnswerCard extends Card {
 	render() {
 		return (
 			<div className="flashcard__card flashcard__card--english">
-				<input ref={this.answerBox} className="flashcard__textbox t-font--primary" type="text" placeholder="English" readonly={this.props.currentCardCompleted? "readonly" : null} />
+				<input ref={this.answerBox} className="flashcard__textbox t-font--primary" type="text" placeholder="English" readonly={this.props.currentCardCompleted? "readonly" : null} tabIndex="1" />
 			</div>
 		);
 	}
@@ -91,7 +93,7 @@ class PrimaryActionButton extends Button {
 	
 	render() {
 		return (
-			<button ref={this.button} onClick={this.props.onClick} className="ui-button primary-action-button t-font--primary">{this.props.text}</button>
+			<button ref={this.button} onClick={this.props.onClick} className="ui-button primary-action-button t-font--primary" tabIndex="3">{this.props.text}</button>
 		);
 	}
 }

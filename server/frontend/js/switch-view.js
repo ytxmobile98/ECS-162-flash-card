@@ -65,7 +65,11 @@ class ReviewTranslationCard extends Card {
 					)
 				)
 			),
-			React.createElement("img", { onClick: this.props.onFlipCard, className: "flashcard__flip-card-icon", src: "icons/flip-card.svg", alt: "Flip card" })
+			React.createElement(
+				"a",
+				{ href: "#", className: "flashcard__flip-card-icon", tabIndex: "2", onClick: this.props.onFlipCard },
+				React.createElement("img", { className: "flashcard__flip-card-icon", src: "icons/flip-card.svg", alt: "Flip card" })
+			)
 		);
 	}
 }
@@ -80,7 +84,7 @@ class AnswerCard extends Card {
 		return React.createElement(
 			"div",
 			{ className: "flashcard__card flashcard__card--english" },
-			React.createElement("input", { ref: this.answerBox, className: "flashcard__textbox t-font--primary", type: "text", placeholder: "English", readonly: this.props.currentCardCompleted ? "readonly" : null })
+			React.createElement("input", { ref: this.answerBox, className: "flashcard__textbox t-font--primary", type: "text", placeholder: "English", readonly: this.props.currentCardCompleted ? "readonly" : null, tabIndex: "1" })
 		);
 	}
 }
@@ -98,7 +102,7 @@ class PrimaryActionButton extends Button {
 	render() {
 		return React.createElement(
 			"button",
-			{ ref: this.button, onClick: this.props.onClick, className: "ui-button primary-action-button t-font--primary" },
+			{ ref: this.button, onClick: this.props.onClick, className: "ui-button primary-action-button t-font--primary", tabIndex: "3" },
 			this.props.text
 		);
 	}

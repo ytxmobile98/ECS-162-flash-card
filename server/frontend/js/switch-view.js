@@ -42,6 +42,7 @@ class OutputCard extends Card {
 class ReviewTranslationCard extends Card {
 	constructor(props) {
 		super(props);
+		this.flipper = React.createRef();
 		this.reviewTranslationBox = React.createRef();
 	}
 
@@ -50,7 +51,20 @@ class ReviewTranslationCard extends Card {
 			"div",
 			{ className: "flashcard__card flashcard__card--translation" },
 			React.createElement("img", { onClick: this.props.onFlipCard, className: "flashcard__flip-card-icon", src: "icons/flip-card.svg", alt: "Flip card" }),
-			React.createElement("input", { ref: this.reviewTranslationBox, className: "flashcard__textbox t-font--primary", type: "text", value: this.props.value, placeholder: "Translation", readonly: "readonly" })
+			React.createElement(
+				"div",
+				{ ref: this.flipper, className: "flashcard__flipper" },
+				React.createElement("input", { ref: this.reviewTranslationBox, className: "flashcard__side flashcard__side--front flashcard__textbox t-font--primary", type: "text", value: this.props.value, placeholder: "Translation", readonly: "readonly" }),
+				React.createElement(
+					"div",
+					{ className: "flashcard__side flashcard__side--back" },
+					React.createElement(
+						"div",
+						{ className: "flashcard__side-content--back" },
+						"CORRECT!"
+					)
+				)
+			)
 		);
 	}
 }

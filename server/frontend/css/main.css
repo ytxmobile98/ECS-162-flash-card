@@ -9,6 +9,12 @@
 
 /* The main UI */
 
+.ui-main {
+	margin: auto;
+	margin-top: 10pt;
+	width: 80%;
+}
+
 [data-js-current-view="add-words"] .ui-main {
 	margin: auto;
 	width: 80%;
@@ -16,8 +22,6 @@
 }
 
 [data-js-current-view="review"] .ui-main {
-	margin: auto;
-	width: 80%;
 	max-width: 500px;
 }
 

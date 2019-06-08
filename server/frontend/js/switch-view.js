@@ -42,18 +42,19 @@ class OutputCard extends Card {
 class ReviewTranslationCard extends Card {
 	constructor(props) {
 		super(props);
+
 		this.flipper = React.createRef();
 		this.reviewTranslationBox = React.createRef();
 	}
 
 	render() {
+
 		return React.createElement(
 			"div",
 			{ className: "flashcard__card flashcard__card--translation" },
-			React.createElement("img", { onClick: this.props.onFlipCard, className: "flashcard__flip-card-icon", src: "icons/flip-card.svg", alt: "Flip card" }),
 			React.createElement(
 				"div",
-				{ ref: this.flipper, className: "flashcard__flipper" },
+				{ ref: this.flipper, className: "flashcard__flipper", "data-js-flipped": this.props.flipped ? true : null },
 				React.createElement("input", { ref: this.reviewTranslationBox, className: "flashcard__side flashcard__side--front flashcard__textbox t-font--primary", type: "text", value: this.props.value, placeholder: "Translation", readonly: "readonly" }),
 				React.createElement(
 					"div",
@@ -64,7 +65,8 @@ class ReviewTranslationCard extends Card {
 						"CORRECT!"
 					)
 				)
-			)
+			),
+			React.createElement("img", { onClick: this.props.onFlipCard, className: "flashcard__flip-card-icon", src: "icons/flip-card.svg", alt: "Flip card" })
 		);
 	}
 }
@@ -183,7 +185,8 @@ class ReviewPage extends Page {
 
 		this.setState(function (prevState) {
 			return {
-				cardOnDisplay: getNextCard()
+				cardOnDisplay: getNextCard(),
+				reviewTranslationCardFlipped: false
 			};
 		});
 
@@ -221,6 +224,9 @@ class ReviewPage extends Page {
 	flipCard() {
 		const answerBox = this.answerCard.current.answerBox.current;
 		let isCorrect = this.checkCorrect(answerBox.value);
+		this.setState({
+			reviewTranslationCardFlipped: !this.state.reviewTranslationCardFlipped
+		});
 	}
 
 	componentDidMount() {
@@ -238,7 +244,7 @@ class ReviewPage extends Page {
 			React.createElement(
 				"div",
 				{ className: "flashcard__flexbox" },
-				React.createElement(ReviewTranslationCard, { ref: this.reviewTranslationCard, value: this.state.cardOnDisplay.Chinese, onFlipCard: this.flipCard.bind(this) }),
+				React.createElement(ReviewTranslationCard, { ref: this.reviewTranslationCard, value: this.state.cardOnDisplay.Chinese, onFlipCard: this.flipCard.bind(this), flipped: this.state.reviewTranslationCardFlipped }),
 				React.createElement(AnswerCard, { ref: this.answerCard })
 			),
 			React.createElement(

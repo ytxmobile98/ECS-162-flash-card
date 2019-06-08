@@ -43,7 +43,7 @@
 	transform-style: preserve-3d;
 }
 
-[data-js-showing-back-side] {
+[data-js-flipped] {
 	transform: rotateY(180deg);
 }
 
@@ -56,7 +56,7 @@
 	backface-visibility: hidden;
 }
 
-[data-js-showing-back-side] .flashcard__side--front {
+[data-js-flipped] .flashcard__side--front {
 	opacity: 0;
 	transition: opacity 1s;
 }
@@ -73,7 +73,7 @@
 	padding: 10px;
 }
 
-[data-is-correct] {
+[data-js-is-correct] {
 	--outline-color: seagreen;
 	--background-color: palegreen;
 	background-color: var(--background-color);

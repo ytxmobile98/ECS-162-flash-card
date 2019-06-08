@@ -43,10 +43,8 @@ class OutputCard extends Card {
 class ReviewTranslationCard extends Card {
 	constructor(props) {
 		super(props);
-		
 		this.flipper = React.createRef();
 		this.reviewTranslationBox = React.createRef();
-		
 	}
 	
 	render() {
@@ -56,7 +54,7 @@ class ReviewTranslationCard extends Card {
 				<div ref={this.flipper} className="flashcard__flipper" data-js-flipped={this.props.flipped ? true : null} >
 					<input ref={this.reviewTranslationBox} className="flashcard__side flashcard__side--front flashcard__textbox t-font--primary" type="text" value={this.props.value} placeholder="Translation" readonly="readonly" />
 					<div className="flashcard__side flashcard__side--back">
-						<div className="flashcard__side-content--back">CORRECT!</div>
+						<div className="flashcard__side-content--back" data-js-is-correct={this.props.isCorrect ? true : null}>{this.props.feedback}</div>
 					</div>
 				</div>
 				<img onClick={this.props.onFlipCard} className="flashcard__flip-card-icon" src="icons/flip-card.svg" alt="Flip card" />
@@ -74,7 +72,7 @@ class AnswerCard extends Card {
 	render() {
 		return (
 			<div className="flashcard__card flashcard__card--english">
-				<input ref={this.answerBox} className="flashcard__textbox t-font--primary" type="text" placeholder="English" />
+				<input ref={this.answerBox} className="flashcard__textbox t-font--primary" type="text" placeholder="English" readonly={this.props.currentCardCompleted? "readonly" : null} />
 			</div>
 		);
 	}
@@ -169,6 +167,11 @@ class ReviewPage extends Page {
 		super(props);
 		this.state = {
 			cardOnDisplay: {},
+			feedback: "",
+			isCorrect: false,
+			
+			reviewTranslationCardFlipped: false,
+			currentCardCompleted: false
 		}
 		
 		this.reviewTranslationCard = React.createRef();
@@ -179,10 +182,19 @@ class ReviewPage extends Page {
 	
 	displayNextCard() {
 		
+		const answerBox = this.answerCard.current.answerBox.current;
+		answerBox.value = "";
+		
 		this.setState(function (prevState){
+			
+			const nextCard = getNextCard();
+			
 			return {
 				cardOnDisplay: getNextCard(),
-				reviewTranslationCardFlipped: false
+				feedback: "",
+				
+				reviewTranslationCardFlipped: false,
+				currentCardCompleted: false
 			}
 		});
 		
@@ -192,7 +204,7 @@ class ReviewPage extends Page {
 			let Chinese = cardOnDisplay.Chinese;
 			
 			const xhr = new XMLHttpRequest();
-			makeRequest(xhr, `/update-seen?Chinese=${Chinese}`, function() {
+			makeRequest(xhr, `/update-seen?Chinese=${Chinese}`, function () {
 				console.log(xhr.response);
 				requestFlashCards();
 			});
@@ -204,16 +216,38 @@ class ReviewPage extends Page {
 		let EnglishWords = cardOnDisplay.details.English;
 		let isCorrect = (!!EnglishWords) && EnglishWords.includes(answer);
 		
-		if (isCorrect) {
-			const translation = this.reviewTranslationCard.current.reviewTranslationBox.current;
-			let Chinese = translation.value;
+		this.setState((function (prevState) {
+			if (isCorrect && !this.state.reviewTranslationCardFlipped) {
+				
+				this.setState({
+					feedback: "CORRECT!",
+				});
+				
+				if (!prevState.currentCardCompleted) {
+					const translation = this.reviewTranslationCard.current.reviewTranslationBox.current;
+					let Chinese = translation.value;
+					
+					const xhr = new XMLHttpRequest();
+					makeRequest(xhr, `/update-correct?Chinese=${Chinese}`, function () {
+						console.log(xhr.response);
+						requestFlashCards();
+					});
+				}
+			}
 			
-			const xhr = new XMLHttpRequest();
-			makeRequest(xhr, `/update-correct?Chinese=${Chinese}`, function() {
-				console.log(xhr.response);
-				requestFlashCards();
-			});
-		}
+			else {
+				this.setState({
+					feedback: EnglishWords.join(""),
+				});
+			}
+			
+		}).bind(this));
+		
+		this.setState(function (prevState) {
+			return {
+				currentCardCompleted: true
+			}
+		});
 		 
 		return isCorrect;
 	}
@@ -238,8 +272,8 @@ class ReviewPage extends Page {
 		return (
 			<div className="ui-main">
 				<div className="flashcard__flexbox">
-					<ReviewTranslationCard ref={this.reviewTranslationCard} value={this.state.cardOnDisplay.Chinese} onFlipCard={this.flipCard.bind(this)} flipped={this.state.reviewTranslationCardFlipped} />
-					<AnswerCard ref={this.answerCard} />
+					<ReviewTranslationCard ref={this.reviewTranslationCard} value={this.state.cardOnDisplay.Chinese} onFlipCard={this.flipCard.bind(this)} flipped={this.state.reviewTranslationCardFlipped} feedback={this.state.feedback} isCorrect={this.state.feedback === "CORRECT!"} />
+					<AnswerCard ref={this.answerCard} currentCardCompleted={this.state.currentCardCompleted} />
 				</div>
 				
 				<p className="primary-action-button__par">

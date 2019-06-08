@@ -49,7 +49,7 @@ class ReviewTranslationCard extends Card {
 		return React.createElement(
 			"div",
 			{ className: "flashcard__card flashcard__card--translation" },
-			React.createElement("input", { ref: this.reviewTranslationBox, className: "flashcard__textbox t-font--primary", type: "text", placeholder: "Translation", readonly: "readonly" }),
+			React.createElement("input", { ref: this.reviewTranslationBox, className: "flashcard__textbox t-font--primary", type: "text", value: this.props.value, placeholder: "Translation", readonly: "readonly" }),
 			React.createElement("img", { onClick: this.props.onFlipCard, className: "flashcard__flip-card-icon", src: "icons/flip-card.svg", alt: "Flip card" })
 		);
 	}
@@ -164,9 +164,7 @@ class ReviewPage extends Page {
 
 		this.setState(function (prevState) {
 			const cardOnDisplay = prevState.cardOnDisplay;
-			const translation = this.reviewTranslationCard.current.reviewTranslationBox.current;
 			let Chinese = cardOnDisplay.Chinese;
-			translation.value = Chinese;
 
 			const xhr = new XMLHttpRequest();
 			makeRequest(xhr, `/update-seen?Chinese=${Chinese}`, function () {
@@ -215,7 +213,7 @@ class ReviewPage extends Page {
 			React.createElement(
 				"div",
 				{ className: "flashcard__flexbox" },
-				React.createElement(ReviewTranslationCard, { ref: this.reviewTranslationCard, onFlipCard: this.flipCard.bind(this) }),
+				React.createElement(ReviewTranslationCard, { ref: this.reviewTranslationCard, value: this.state.cardOnDisplay.Chinese, onFlipCard: this.flipCard.bind(this) }),
 				React.createElement(AnswerCard, { ref: this.answerCard })
 			),
 			React.createElement(

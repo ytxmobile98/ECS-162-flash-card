@@ -49,8 +49,8 @@ class ReviewTranslationCard extends Card {
 	render() {
 		return (
 			<div className="flashcard__card flashcard__card--translation">
-				<input ref={this.reviewTranslationBox} className="flashcard__textbox t-font--primary" type="text" value={this.props.value} placeholder="Translation" readonly="readonly" />
 				<img onClick={this.props.onFlipCard} className="flashcard__flip-card-icon" src="icons/flip-card.svg" alt="Flip card" />
+				<input ref={this.reviewTranslationBox} className="flashcard__textbox t-font--primary" type="text" value={this.props.value} placeholder="Translation" readonly="readonly" />
 			</div>
 		);
 	}

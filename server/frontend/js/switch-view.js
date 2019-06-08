@@ -68,7 +68,7 @@ class ReviewTranslationCard extends Card {
 			React.createElement(
 				"a",
 				{ href: "#", className: "flashcard__flip-card-icon", tabIndex: "2", onClick: this.props.onFlipCard },
-				React.createElement("img", { className: "flashcard__flip-card-icon", src: "icons/flip-card.svg", alt: "Flip card" })
+				React.createElement("img", { src: "icons/flip-card.svg", alt: "Flip card" })
 			)
 		);
 	}

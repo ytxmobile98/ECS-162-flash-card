@@ -58,7 +58,7 @@ class ReviewTranslationCard extends Card {
 					</div>
 				</div>
 				<a href="#" className="flashcard__flip-card-icon" tabIndex="2" onClick={this.props.onFlipCard}>
-					<img className="flashcard__flip-card-icon" src="icons/flip-card.svg" alt="Flip card"/>
+					<img src="icons/flip-card.svg" alt="Flip card"/>
 				</a>
 			</div>
 		);

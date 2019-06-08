@@ -12,7 +12,8 @@
 
 .ui-header__page-name {
 	margin: 0;
-	font-size: 60pt;
+	font-size: 20pt;
+	line-height: 80pt;
 }
 
 .ui-header__switch-view-button {
@@ -31,4 +32,10 @@
 	transform: translate(0, -50%);
 	background-color: crimson;
 	color: white;
+}
+
+@media screen and (min-width: 768px) {
+	.ui-header__page-name {
+		font-size: 60pt;
+	}
 }

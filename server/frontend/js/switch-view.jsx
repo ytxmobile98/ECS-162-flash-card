@@ -34,7 +34,7 @@ class OutputCard extends Card {
 	render() {
 		return (
 			<div className="flashcard__card">
-				<input ref={this.outputBox} className="flashcard__textbox t-font--primary" type="text" autocomplete="off" placeholder="Chinese 中文" readonly="readonly" />
+				<input ref={this.outputBox} value={this.props.value} className="flashcard__textbox t-font--primary" type="text" autocomplete="off" placeholder="Chinese 中文" readonly="readonly" />
 			</div>
 		);
 	}
@@ -99,17 +99,28 @@ class AddWordsPage extends Page {
 	
 	constructor(props) {
 		super(props);
+		
+		this.state = {
+			currentFlashCard: currentFlashCard
+		}
+		
 		this.queryCard = React.createRef();
 		this.outputCard = React.createRef();
 		this.saveButton = React.createRef();
 	}
 	
 	translate(event) {
-		const queryBox = this.queryCard.current.queryBox.current;
-		const outputBox = this.outputCard.current.outputBox.current;
+		
+		function handleTranslation(flashCard) {
+			this.setState(function (prevState) {
+				return {
+					currentFlashCard: flashCard
+				}
+			});
+		}
 		
 		if (event.key === "Enter") {
-			requestTranslation(event.target.value, queryBox, outputBox);
+			requestTranslation(event.target.value, handleTranslation.bind(this));
 		}
 	}
 	
@@ -132,7 +143,7 @@ class AddWordsPage extends Page {
 			<div className="ui-main">
 				<div className="flashcard__flexbox">
 					<QueryCard ref={this.queryCard} onPressEnter={this.translate.bind(this)} />
-					<OutputCard ref={this.outputCard} />
+					<OutputCard ref={this.outputCard} value={this.state.currentFlashCard.Chinese} />
 				</div>
 				
 				<p className="primary-action-button__par">

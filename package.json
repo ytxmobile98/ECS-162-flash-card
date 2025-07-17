@@ -20,7 +20,7 @@
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react-app": "^3.1.2",
-    "cookie-session": "^1.3.3",
+    "cookie-session": "^2.1.1",
     "express": "^4.21.1",
     "fs": "0.0.1-security",
     "http": "0.0.0",
